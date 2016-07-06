@@ -2,7 +2,6 @@ mocha = require 'mocha'
 should = require 'should'
 
 jsdom = require 'jsdom'
-_ = require 'underscore'
 
 delete require.cache[ require.resolve '../..' ]
 connectors = require '../..'
