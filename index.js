@@ -4,6 +4,7 @@
 module.exports = forAllEventInterfaces;
 
 var constructors = {
+  'Event': EventConnector,
 };
 
 function forAllEventInterfaces(window, document) {
@@ -15,5 +16,26 @@ function forAllEventInterfaces(window, document) {
     connectors[name] = constructors[name](window[name]);
   });
   return connectors;
+}
+
+function EventConnector(Event, additionalKeys) {
+  var keys = [ 'bubbles', 'cancelable', 'target' ].concat(additionalKeys || []);
+
+  function split(event) {
+    return [ event.type ].concat(keys.map(function(key) { return event[key]; }))
+  }
+  function create(args) {
+    var properties = {};
+    args.slice(1).forEach(function(val, i) { properties[keys[i]] = val; });
+    var e = new Event(args[0], properties);
+    e.parsedTarget = properties.target;
+    return e;
+  }
+
+  return {
+    by: Event,
+    split: split,
+    create: create,
+  }
 }
 

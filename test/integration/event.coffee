@@ -19,38 +19,42 @@ describe 'WSON with Event connector', ->
     window = document.defaultView
     testedWSON = new WSON connectors:
       Event: eventConnectors(window).Event,
-      Window: domConnectors(window, document).Window,
       HTMLBodyElement: domConnectors(window, document).HTMLBodyElement
     event = new window.Event 'generic',
         bubbles: false,
         cancelable: false,
-        currentTarget: window,
-        target: document.body
+  after ->
+    window.close()
 
   describe '.stringify', ->
-     it 'should serialize an event', ->
-      serialized = testedWSON.stringify event
-      serialized.should.equal '[:Event|generic,#f,#f,[:Window],[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    it 'should serialize an event', ->
+      serialized = null
+      document.body.addEventListener 'generic', -> serialized = testedWSON.stringify event
+      document.body.dispatchEvent event
+      serialized.should.equal '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
 
   describe '.parse', ->
-    it 'should return instance eqivalent to the one passed to .stringify', ->
-      serialized = testedWSON.stringify event
+    it 'should return instance equal to the one passed to .stringify', ->
+      serialized = null
+      document.body.addEventListener 'generic', -> serialized = testedWSON.stringify event
+      document.body.dispatchEvent event
+
       deserialized = testedWSON.parse serialized
-      ['type', 'bubbles', 'cancelable', 'currentTarget', 'target'].forEach (key)->
-        deserialized[key].should.equal event[key]
+      ['type', 'bubbles', 'cancelable'].forEach (key)-> deserialized[key].should.equal event[key]
+      deserialized.parsedTarget.should.be.exactly document.body
 
     it 'should be able to parse event stringified in another window', ->
-        serialized = testedWSON.stringify event
+      serialized = null
+      document.body.addEventListener 'generic', -> serialized = testedWSON.stringify event
+      document.body.dispatchEvent event
 
-        anotherDocument = jsdom.jsdom document.body.outerHTML
-        anotherWindow = anotherDocument.defaultView
-        anotherWSON = new WSON connectors:
-          Event: eventConnectors(anotherWindow).Event,
-          Window: domConnectors(anotherWindow, anotherDocument).Window,
-          HTMLBodyElement: domConnectors(anotherWindow, anotherDocument).HTMLBodyElement
+      anotherDocument = jsdom.jsdom document.body.outerHTML
+      anotherWindow = anotherDocument.defaultView
+      anotherWSON = new WSON connectors:
+        Event: eventConnectors(anotherWindow).Event,
+        HTMLBodyElement: domConnectors(anotherWindow, anotherDocument).HTMLBodyElement
 
-        deserialized = anotherWSON.parse serialized
-        ['type', 'bubbles', 'cancelable'].forEach (key)-> deserialized[key].should.equal event[key]
-        deserialized.currentTarget.should.be.exactly anotherWindow
-        deserialized.target.should.be.exactly anotherDocument.body
+      deserialized = anotherWSON.parse serialized
+      ['type', 'bubbles', 'cancelable'].forEach (key)-> deserialized[key].should.equal event[key]
+      deserialized.parsedTarget.should.be.exactly anotherDocument.body
 

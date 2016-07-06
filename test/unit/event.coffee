@@ -15,28 +15,33 @@ describe 'connector.Event', ->
   before ->
     document = jsdom.jsdom()
     window = document.defaultView
-    testedConnector = new connectors(window).Event
+    testedConnector = connectors(window).Event
     event = new window.Event 'generic',
         bubbles: false,
         cancelable: false,
-        currentTarget: window,
-        target: document.body
+  after ->
+    window.close()
 
   describe '.by', ->
-
     it 'should be events\'s constructor', ->
       testedConnector.by.should.be.exactly window.Event
 
   describe '.split', ->
-
     it 'should return stringified event', ->
-      testedConnector.split(event).should.be.eql [ 'generic', false, false, window, document.body ]
+      splitted = null
+      document.body.addEventListener 'generic', ->
+        splitted = testedConnector.split event
+      document.body.dispatchEvent event
+      splitted.should.be.eql [ 'generic', false, false, document.body ]
 
   describe '.create', ->
+    it 'should return event equal to the one serialized', ->
+      splitted = null
+      document.body.addEventListener 'generic', ->
+        splitted = testedConnector.split event
+      document.body.dispatchEvent event
 
-    it 'should return event equalivent to one serialized', ->
-      serialized = testedConnector.split event
-      unserialized = testedConnector.create serialized
-      [ 'type', 'cancelable', 'bubbles', 'currentTarget', 'target' ].forEach (key)->
-        unserialized[key].should.equal event[key]
+      created = testedConnector.create splitted
+      [ 'type', 'cancelable', 'bubbles' ].forEach (key)-> created[key].should.equal event[key]
+      created.parsedTarget.should.be.exactly document.body
 
