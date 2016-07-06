@@ -31,9 +31,8 @@
     "jsdom": "^9.4.0",
     "mocha": "*",
     "should": "~9.0.2",
-    "underscore": "^1.8.3",
-    "wson": "^1.10.0"
+    "wson": "^1.10.0",
+    "wson-dom-connector": "^0.2.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
