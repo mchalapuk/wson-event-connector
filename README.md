@@ -1,8 +1,8 @@
 [npm-url]: https://npmjs.org/package/wson-event-connector
-[npm-image]: https://img.shields.io/npm/v/wson-event-connector.svg?maxAge=2592000
+[npm-image]: https://img.shields.io/npm/v/wson-event-connector.svg?maxAge=1
 
 [travis-url]: http://travis-ci.org/webfront-toolkit/wson-event-connector
-[travis-image]: https://img.shields.io/travis/webfront-toolkit/wson-event-connector.svg?maxAge=2592000
+[travis-image]: https://img.shields.io/travis/webfront-toolkit/wson-event-connector.svg?maxAge=1
 
 [david-url]: https://david-dm.org/webfront-toolkit/wson-event-connector
 [david-image]: https://david-dm.org/webfront-toolkit/wson-event-connector.svg
@@ -47,10 +47,10 @@ It can be used in a web browser via [browserify][browserify]...
 
 ```javascript
 var WSON = require("wson");
-var EventConnector = require("wson-event-connector");
+var eventConnectors = require("wson-event-connector");
 
 var wson = new WSON({
-  connectors: EventConnector.forAllEventInterfaces(window)
+  connectors: eventConnectors(window)
   });
 
 console.log(wson.stringify(new window.MouseEvent('click')));
@@ -65,13 +65,13 @@ console.log(wson.stringify(new window.MouseEvent('click')));
 
 ```javascript
 var WSON = require("wson");
-var EventConnector = require("wson-event-connector");
+var eventConnectors = require("wson-event-connector");
 var jsdom = require("jsdom");
 
 var window = jsdom.jsdom("<body></body>").defaultView;
 
 var wson = new WSON({
-  connectors: EventConnector.forAllEventInterfaces(window)
+  connectors: eventConnectors(window)
   });
 
 console.log(wson.stringify(new window.MouseEvent('click')));
