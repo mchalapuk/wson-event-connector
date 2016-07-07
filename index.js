@@ -28,6 +28,10 @@ function EventConnector(Event, additionalKeys) {
     var properties = {};
     args.slice(1).forEach(function(val, i) { properties[keys[i]] = val; });
     var e = new Event(args[0], properties);
+
+    // Target element is deserialized to parsedTarget non-standard property,
+    // because event.target property is read-only and set by the browser
+    // during call to Element.dispatchEvent().
     e.parsedTarget = properties.target;
     return e;
   }
