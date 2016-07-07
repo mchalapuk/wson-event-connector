@@ -17,6 +17,18 @@ testParams = [
     }
     [ 'generic', false, false, null ]
   ]
+  [
+    'AnimationEvent'
+    'test'
+    {
+      bubbles: false
+      cancelable: true
+      animationName: 'testAnim'
+      elapsedTime: 100
+      pseudoElement: 'pseudo'
+    }
+    [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
+  ]
 ]
 
 window = null

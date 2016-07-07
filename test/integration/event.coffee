@@ -19,6 +19,18 @@ testParams = [
       cancelable: false
     }
     '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]' ]
+  [
+    'AnimationEvent'
+    'test'
+    {
+      bubbles: false
+      cancelable: false
+      animationName: 'testAnim'
+      elapsedTime: 100
+      pseudoElement: 'pseudo'
+    }
+    '[:AnimationEvent|test|#f|#f|testAnim|#100|pseudo|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
 ]
 
 
