@@ -32,7 +32,7 @@
     "mocha": "*",
     "should": "~9.0.2",
     "wson": "^1.10.0",
-    "wson-dom-connector": "^0.3.0"
+    "wson-dom-connector": "^0.4.0"
   },
   "dependencies": {}
 }
