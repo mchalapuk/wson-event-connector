@@ -2,46 +2,51 @@ mocha = require 'mocha'
 should = require 'should'
 
 jsdom = require 'jsdom'
+declareMissingEvents = require '../event-stubs.coffee'
 
 delete require.cache[ require.resolve '../..' ]
 connectors = require '../..'
 
-describe 'connector.Event', ->
-  document = null
-  window = null
-  testedConnector = null
-  event = null
+testParams = [
+  [
+    'Event'
+    'generic'
+    {
+      bubbles: false
+      cancelable: false
+    }
+    [ 'generic', false, false, null ]
+  ]
+]
 
-  before ->
-    document = jsdom.jsdom()
-    window = document.defaultView
-    testedConnector = connectors(window).Event
-    event = new window.Event 'generic',
-        bubbles: false,
-        cancelable: false,
-  after ->
-    window.close()
+window = null
+before -> window = declareMissingEvents jsdom.jsdom().defaultView
+after -> window.close()
 
-  describe '.by', ->
-    it 'should be events\'s constructor', ->
-      testedConnector.by.should.be.exactly window.Event
+for params in testParams
+  do (params)->
+    [eventName, eventType, properties, expectedSplit] = params
 
-  describe '.split', ->
-    it 'should return stringified event', ->
-      splitted = null
-      document.body.addEventListener 'generic', ->
-        splitted = testedConnector.split event
-      document.body.dispatchEvent event
-      splitted.should.be.eql [ 'generic', false, false, document.body ]
+    describe "connector.#{eventName}", ->
+      testedConnector = null
+      event = null
 
-  describe '.create', ->
-    it 'should return event equal to the one serialized', ->
-      splitted = null
-      document.body.addEventListener 'generic', ->
-        splitted = testedConnector.split event
-      document.body.dispatchEvent event
+      beforeEach ->
+        testedConnector = connectors(window)[eventName]
+        event = new window[eventName] eventType, properties
 
-      created = testedConnector.create splitted
-      [ 'type', 'cancelable', 'bubbles' ].forEach (key)-> created[key].should.equal event[key]
-      created.parsedTarget.should.be.exactly document.body
+      describe ".by", ->
+        it "should be #{eventName}\'s constructor", ->
+          testedConnector.by.should.be.exactly window[eventName]
+
+      describe ".split", ->
+        it "should return #{expectedSplit}", ->
+          testedConnector.split(event).should.be.eql expectedSplit
+
+      describe ".create", ->
+        it "should return instance of #{eventName}", ->
+          created = testedConnector.create expectedSplit
+          created[key].should.equal properties[key] for key in Object.keys properties
+          created.type.should.equal eventType
+          created.constructor.should.equal window[eventName]
 

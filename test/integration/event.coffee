@@ -1,60 +1,60 @@
 should = require 'should'
 mocha = require 'mocha'
+_ = require 'underscore'
 
 jsdom = require 'jsdom'
+declareMissingEvents = require '../event-stubs.coffee'
 WSON = require 'wson'
 
 delete require.cache[ require.resolve '../..' ]
 eventConnectors = require '../..'
 domConnectors = require 'wson-dom-connector'
 
-describe 'WSON with Event connector', ->
-  document = null
-  window = null
-  testedWSON = null
-  event = null
+testParams = [
+  [
+    'Event'
+    'generic'
+    {
+      bubbles: false
+      cancelable: false
+    }
+    '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]' ]
+]
 
-  before ->
-    document = jsdom.jsdom()
-    window = document.defaultView
-    testedWSON = new WSON connectors:
-      Event: eventConnectors(window).Event,
-      HTMLBodyElement: domConnectors(window, document).HTMLBodyElement
-    event = new window.Event 'generic',
-        bubbles: false,
-        cancelable: false,
-  after ->
+
+describe "WSON with all Event and DOM connectors", ->
+  window = null
+  body = null
+
+  testedWSON = null
+
+  beforeEach ->
+    window = declareMissingEvents jsdom.jsdom().defaultView
+    body = window.document.body
+    testedWSON = new WSON connectors: _.extend eventConnectors(window), domConnectors(window)
+  afterEach ->
     window.close()
 
-  describe '.stringify', ->
-    it 'should serialize an event', ->
-      serialized = null
-      document.body.addEventListener 'generic', -> serialized = testedWSON.stringify event
-      document.body.dispatchEvent event
-      serialized.should.equal '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  describe ".stringify", ->
+    for params in testParams
+      do (params) ->
+        [eventName, eventType, properties, expectedString] = params
+
+        it "should serialize #{eventName} to #{expectedString}", ->
+          event = new window[eventName] eventType, properties
+          serialized = null
+          body.addEventListener eventType, -> serialized = testedWSON.stringify event
+          body.dispatchEvent event
+          serialized.should.equal expectedString
 
   describe '.parse', ->
-    it 'should return instance equal to the one passed to .stringify', ->
-      serialized = null
-      document.body.addEventListener 'generic', -> serialized = testedWSON.stringify event
-      document.body.dispatchEvent event
+    for params in testParams
+      do (params) ->
+        [eventName, eventType, properties, expectedString] = params
 
-      deserialized = testedWSON.parse serialized
-      ['type', 'bubbles', 'cancelable'].forEach (key)-> deserialized[key].should.equal event[key]
-      deserialized.parsedTarget.should.be.exactly document.body
-
-    it 'should be able to parse event stringified in another window', ->
-      serialized = null
-      document.body.addEventListener 'generic', -> serialized = testedWSON.stringify event
-      document.body.dispatchEvent event
-
-      anotherDocument = jsdom.jsdom document.body.outerHTML
-      anotherWindow = anotherDocument.defaultView
-      anotherWSON = new WSON connectors:
-        Event: eventConnectors(anotherWindow).Event,
-        HTMLBodyElement: domConnectors(anotherWindow, anotherDocument).HTMLBodyElement
-
-      deserialized = anotherWSON.parse serialized
-      ['type', 'bubbles', 'cancelable'].forEach (key)-> deserialized[key].should.equal event[key]
-      deserialized.parsedTarget.should.be.exactly anotherDocument.body
+        it "should parse #{expectedString} to #{eventName} instance", ->
+          deserialized = testedWSON.parse expectedString
+          deserialized.type.should.be.exactly eventType
+          deserialized[key].should.be.equal properties[key] for key in Object.keys properties
+          deserialized.parsedTarget.should.be.exactly body
 
