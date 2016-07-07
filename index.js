@@ -4,8 +4,9 @@
 module.exports = forAllEventInterfaces;
 
 var constructors = {
-  'Event': withProperties([]),
-  'AnimationEvent': withProperties([ 'animationName', 'elapsedTime', 'pseudoElement' ]),
+  'Event': withProperties(),
+  'AnimationEvent': withProperties('animationName', 'elapsedTime', 'pseudoElement'),
+  'BeforeUnloadEvent': withProperties(),
 };
 
 function forAllEventInterfaces(namespace) {
@@ -23,13 +24,14 @@ function forAllEventInterfaces(namespace) {
   return connectors;
 }
 
-function withProperties(additionalKeys) {
+function withProperties() {
+  var additionalKeys = [].slice.call(arguments)
   return function(Event) {
-    return new EventConnector(Event, additionalKeys);
+    return new RegularEventConnector(Event, additionalKeys);
   };
 }
 
-function EventConnector(Event, additionalKeys) {
+function RegularEventConnector(Event, additionalKeys) {
   var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat( [ 'target' ] );
 
   function split(event) {
@@ -50,6 +52,21 @@ function EventConnector(Event, additionalKeys) {
   return {
     by: Event,
     split: split,
+    create: create,
+  }
+}
+
+function SpecializedEventConnector(Event) {
+  function returnEmptyArray(event) {
+    return [ event.type ]
+  }
+  function create(args) {
+    return new Event(args[0])
+  }
+
+  return {
+    by: Event,
+    split: returnEmptyArray,
     create: create,
   }
 }

@@ -29,6 +29,15 @@ testParams = [
     }
     [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
   ]
+  [
+    'BeforeUnloadEvent'
+    'beforeunload'
+    {
+      bubbles: false
+      cancelable: true
+    }
+    [ 'beforeunload', false, true, null ]
+  ]
 ]
 
 window = null

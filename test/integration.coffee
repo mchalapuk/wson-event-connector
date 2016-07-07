@@ -18,7 +18,8 @@ testParams = [
       bubbles: false
       cancelable: false
     }
-    '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]' ]
+    '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
   [
     'AnimationEvent'
     'test'
@@ -30,6 +31,15 @@ testParams = [
       pseudoElement: 'pseudo'
     }
     '[:AnimationEvent|test|#f|#f|testAnim|#100|pseudo|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
+    'BeforeUnloadEvent'
+    'yay!'
+    {
+      bubbles: false
+      cancelable: false
+    }
+    '[:BeforeUnloadEvent|yay!|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
 ]
 
@@ -52,7 +62,7 @@ describe "WSON with all Event and DOM connectors", ->
       do (params) ->
         [eventName, eventType, properties, expectedString] = params
 
-        it "should serialize #{eventName} to #{expectedString}", ->
+        it "should serialize #{eventName}", ->
           event = new window[eventName] eventType, properties
           serialized = null
           body.addEventListener eventType, -> serialized = testedWSON.stringify event
@@ -64,7 +74,7 @@ describe "WSON with all Event and DOM connectors", ->
       do (params) ->
         [eventName, eventType, properties, expectedString] = params
 
-        it "should parse #{expectedString} to #{eventName} instance", ->
+        it "should parse #{expectedString}", ->
           deserialized = testedWSON.parse expectedString
           deserialized.type.should.be.exactly eventType
           deserialized[key].should.be.equal properties[key] for key in Object.keys properties
