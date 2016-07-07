@@ -4,22 +4,33 @@
 module.exports = forAllEventInterfaces;
 
 var constructors = {
-  'Event': EventConnector,
+  'Event': withProperties([]),
+  'AnimationEvent': withProperties([ 'animationName', 'elapsedTime', 'pseudoElement' ]),
 };
 
-function forAllEventInterfaces(window, document) {
+function forAllEventInterfaces(namespace) {
+  if (!namespace) {
+    throw new Error('Passed namespace is not an object.');
+  }
+
   var connectors = {};
   Object.keys(constructors).forEach(function(name) {
-    if (typeof window[name] === 'undefined') {
+    if (typeof namespace[name] === 'undefined') {
       return;
     }
-    connectors[name] = constructors[name](window[name]);
+    connectors[name] = constructors[name](namespace[name]);
   });
   return connectors;
 }
 
+function withProperties(additionalKeys) {
+  return function(Event) {
+    return new EventConnector(Event, additionalKeys);
+  };
+}
+
 function EventConnector(Event, additionalKeys) {
-  var keys = [ 'bubbles', 'cancelable', 'target' ].concat(additionalKeys || []);
+  var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat( [ 'target' ] );
 
   function split(event) {
     return [ event.type ].concat(keys.map(function(key) { return event[key]; }))
