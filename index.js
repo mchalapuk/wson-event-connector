@@ -4,9 +4,10 @@
 module.exports = forAllEventInterfaces;
 
 var constructors = {
-  'Event': withProperties(),
+  'Event': EventConnector,
   'AnimationEvent': withProperties('animationName', 'elapsedTime', 'pseudoElement'),
-  'BeforeUnloadEvent': withProperties(),
+  'BeforeUnloadEvent': EventConnector,
+  'ClipboardEvent': ClipboardEventConnector,
   'CloseEvent': withProperties('code', 'reason', 'wasClean'),
 };
 
@@ -28,17 +29,42 @@ function forAllEventInterfaces(namespace) {
 function withProperties() {
   var additionalKeys = [].slice.call(arguments)
   return function(Event) {
-    return new RegularEventConnector(Event, additionalKeys);
+    return new EventConnector(Event, additionalKeys);
   };
 }
 
-function RegularEventConnector(Event, additionalKeys) {
+function EventConnector(Event, additionalKeys) {
   var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat( [ 'target' ] );
 
-  function split(event) {
-    return [ event.type ].concat(keys.map(function(key) { return event[key]; }))
+  return {
+    by: Event,
+    split: splitProperties(keys),
+    create: createWithProperties(Event, keys),
   }
-  function create(args) {
+}
+
+function ClipboardEventConnector(Event) {
+  var format = 'text/plain';
+
+  function split(e) {
+    return [ e.type, e.bubbles, e.cancelable, format, e.clipboardData.getData(format), e.target ];
+  }
+
+  return {
+    by: Event,
+    split: split,
+    create: createWithProperties(Event, ['bubbles', 'cancelable', 'dataType', 'data', 'target']),
+  };
+}
+
+function splitProperties(keys) {
+  return function split(e) {
+    return [ e.type ].concat(keys.map(function(key) { return e[key]; }))
+  };
+}
+
+function createWithProperties(Event, keys) {
+  return function create(args) {
     var properties = {};
     args.slice(1).forEach(function(val, i) { properties[keys[i]] = val; });
     var e = new Event(args[0], properties);
@@ -48,27 +74,6 @@ function RegularEventConnector(Event, additionalKeys) {
     // during call to Element.dispatchEvent().
     e.parsedTarget = properties.target;
     return e;
-  }
-
-  return {
-    by: Event,
-    split: split,
-    create: create,
-  }
-}
-
-function SpecializedEventConnector(Event) {
-  function returnEmptyArray(event) {
-    return [ event.type ]
-  }
-  function create(args) {
-    return new Event(args[0])
-  }
-
-  return {
-    by: Event,
-    split: returnEmptyArray,
-    create: create,
-  }
+  };
 }
 

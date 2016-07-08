@@ -42,6 +42,16 @@ testParams = [
     '[:BeforeUnloadEvent|yay!|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
+    'ClipboardEvent'
+    'copy'
+    {
+      bubbles: false
+      cancelable: false
+      data: 'https://github.com/'
+    }
+    '[:ClipboardEvent|copy|#f|#f|text/plain|https`i//github.com/|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'CloseEvent'
     'close'
     {
@@ -87,8 +97,8 @@ describe "WSON with all Event and DOM connectors", ->
         [eventName, eventType, properties, expectedString] = params
 
         it "should parse #{expectedString}", ->
+          event = new window[eventName] eventType, properties
           deserialized = testedWSON.parse expectedString
           deserialized.type.should.be.exactly eventType
-          deserialized[key].should.be.equal properties[key] for key in Object.keys properties
           deserialized.parsedTarget.should.be.exactly body
 

@@ -16,6 +16,7 @@ testParams = [
       cancelable: false
     }
     [ 'generic', false, false, null ]
+    {}
   ]
   [
     'AnimationEvent'
@@ -28,6 +29,7 @@ testParams = [
       pseudoElement: 'pseudo'
     }
     [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
+    {}
   ]
   [
     'BeforeUnloadEvent'
@@ -37,6 +39,18 @@ testParams = [
       cancelable: true
     }
     [ 'beforeunload', false, true, null ]
+    {}
+  ]
+  [
+    'ClipboardEvent'
+    'copy'
+    {
+      bubbles: true
+      cancelable: true
+      data: 'https://github.com/'
+    }
+    [ 'copy', true, true, 'text/plain', 'https://github.com/', null ]
+    { data: (e)->e.clipboardData.getData('text/plain') }
   ]
   [
     'CloseEvent'
@@ -49,6 +63,7 @@ testParams = [
       wasClean: true
     }
     [ 'close', false, false, 1000, '', true, null ]
+    {}
   ]
 ]
 
@@ -58,7 +73,8 @@ after -> window.close()
 
 for params in testParams
   do (params)->
-    [eventName, eventType, properties, expectedSplit] = params
+    [eventName, eventType, properties, expectedSplit, getters] = params
+    (getters[key] = ((event)->event[key]) if !getters[key]) for key in Object.keys properties
 
     describe "connector.#{eventName}", ->
       testedConnector = null
@@ -79,7 +95,7 @@ for params in testParams
       describe ".create", ->
         it "should return instance of #{eventName}", ->
           created = testedConnector.create expectedSplit
-          created[key].should.equal properties[key] for key in Object.keys properties
+          getters[key](created).should.equal properties[key] for key in Object.keys properties
           created.type.should.equal eventType
           created.constructor.should.equal window[eventName]
 
