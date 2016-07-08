@@ -96,6 +96,16 @@ Following properties are not serialized:
 [time-stamp]: https://developer.mozilla.org/en-US/docs/Web/API/Event/timeStamp
 [is-trusted]: https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
 
+## Unsupported Events
+
+Serialization of following event classes is not implemented in this module:
+
+ * [BlobEvent][blob-event], because [Blob][blob]'s content can't be fetched
+   from JavaScript.
+
+[blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
+[blob]: https://developer.mozilla.org/en-US/docs/Web/API/Blob
+
 ## API
 Please refer to [wson's documentation][wson] for further details.
 
