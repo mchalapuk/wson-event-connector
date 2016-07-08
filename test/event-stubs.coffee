@@ -42,11 +42,27 @@ module.exports = (window) ->
       @isComposing = properties.isComposing
       super eventType, properties
 
+  class FontFaceEvent extends window.Event
+    constructor: (eventType, properties)->
+      @[key] = properties[key] for key in [
+        'family'
+        'src'
+        'usedSrc'
+        'style'
+        'weight'
+        'stretch'
+        'unicodeRange'
+        'variant'
+        'featureSetting'
+      ]
+      super eventType, properties
+
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
   window.ClipboardEvent = ClipboardEvent if !window.ClipboardEvent?
   window.CompositionEvent = CompositionEvent if !window.CompositionEvent?
   window.CloseEvent = CloseEvent if !window.CloseEvent?
+  window.FontFaceEvent = FontFaceEvent if !window.FontFaceEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
 
   window

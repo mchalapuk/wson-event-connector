@@ -33,6 +33,8 @@ var constructors = {
   'CloseEvent': construct(EventConnector).withProperties('code', 'reason', 'wasClean'),
   'CompositionEvent': construct(EventConnector).withProperties('data', 'locale', 'view'),
   'CustomEvent': construct(EventConnector).withProperties('detail'),
+  'FontFaceEvent': construct(EventConnector).withProperties('family', 'src', 'usedSrc', 'style',
+      'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'),
   'InputEvent': construct(UIEventConnector).withProperties('data', 'isComposing'),
   'UIEvent': UIEventConnector,
 };

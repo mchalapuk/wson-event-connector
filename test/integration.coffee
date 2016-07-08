@@ -54,6 +54,17 @@ testParams = [
     '[:CustomEvent|chat|#t|#t|{contact:@Jerry}|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
+    'FontFaceEvent'
+    'load'
+    {
+      bubbles: false, cancelable: false,
+      family: 'Arial', src: 'file://Arial.ttf', usedSrc: 'file://Arial.ttf', style: 'normal'
+      weight: 'bold', stretch: 'normal', unicodeRange: 'unset', variant: 'normal',
+      featureSetting: null
+    }
+    '[:FontFaceEvent|load|#f|#f|Arial|file`i//Arial.ttf|file`i//Arial.ttf|normal|bold|normal|unset|normal|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]',
+  ]
+  [
     'InputEvent'
     'beforeinput'
     { cancelable: true, data: '', isComposing: false }
