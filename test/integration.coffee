@@ -63,6 +63,16 @@ testParams = [
     }
     '[:CloseEvent|close|#f|#f|#1000|#|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
+  [
+    'CustomEvent'
+    'chat'
+    {
+      bubbles: false
+      cancelable: false
+      detail: '@Jerry'
+    }
+    '[:CustomEvent|chat|#f|#f|@Jerry|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
 ]
 
 

@@ -9,6 +9,7 @@ var constructors = {
   'BeforeUnloadEvent': EventConnector,
   'ClipboardEvent': ClipboardEventConnector,
   'CloseEvent': withProperties('code', 'reason', 'wasClean'),
+  'CustomEvent': withProperties('detail'),
 };
 
 function forAllEventInterfaces(namespace) {

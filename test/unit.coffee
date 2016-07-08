@@ -16,7 +16,6 @@ testParams = [
       cancelable: false
     }
     [ 'generic', false, false, null ]
-    {}
   ]
   [
     'AnimationEvent'
@@ -29,7 +28,6 @@ testParams = [
       pseudoElement: 'pseudo'
     }
     [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
-    {}
   ]
   [
     'BeforeUnloadEvent'
@@ -39,7 +37,6 @@ testParams = [
       cancelable: true
     }
     [ 'beforeunload', false, true, null ]
-    {}
   ]
   [
     'ClipboardEvent'
@@ -63,7 +60,16 @@ testParams = [
       wasClean: true
     }
     [ 'close', false, false, 1000, '', true, null ]
-    {}
+  ]
+  [
+    'CustomEvent'
+    'chat'
+    {
+      bubbles: false
+      cancelable: false
+      detail: '@Matilda'
+    }
+    [ 'chat', false, false, '@Matilda', null ]
   ]
 ]
 
@@ -74,6 +80,7 @@ after -> window.close()
 for params in testParams
   do (params)->
     [eventName, eventType, properties, expectedSplit, getters] = params
+    getters = {} if !getters?
     (getters[key] = ((event)->event[key]) if !getters[key]) for key in Object.keys properties
 
     describe "connector.#{eventName}", ->
