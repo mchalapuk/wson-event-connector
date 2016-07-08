@@ -78,6 +78,24 @@ console.log(wson.stringify(new window.MouseEvent('click')));
 // TODO
 ```
 
+## What is Not Serialized?
+
+Following properties are not serialized:
+
+ * Properties, which can be set only in event listener by calling methods
+   on event object ([`Event.defaultPrevented`][default-prevented],
+   [`Event.cancelBubble`][cancelBubble]),
+ * Properties, which values are set by the browser during an event dispatch
+   ([`Event.currentTarget`][current-target], [`Event.eventPhase`][event-phase],
+   [`Event.timeStamp`][time-stamp], [`Event.isTrusted`][is-trusted]).
+
+[default-prevented]: https://developer.mozilla.org/en-US/docs/Web/API/Event/defaultPrevented
+[cancel-bubble]: https://developer.mozilla.org/en-US/docs/Web/API/Event/cancelBubble
+[current-target]: https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
+[event-phase]: https://developer.mozilla.org/en-US/docs/Web/API/Event/eventPhase
+[time-stamp]: https://developer.mozilla.org/en-US/docs/Web/API/Event/timeStamp
+[is-trusted]: https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
+
 ## API
 Please refer to [wson's documentation][wson] for further details.
 
