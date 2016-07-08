@@ -78,6 +78,21 @@ console.log(wson.stringify(new window.MouseEvent('click')));
 // TODO
 ```
 
+## Supported Events
+
+Following events types are currently supported:
+
+ * [`Event`](://dom.spec.whatwg.org/#interface-event)
+  * [`UIEvent`](://w3c.github.io/uievents/#interface-uievent)
+   * [`CompositionEvent`](://w3c.github.io/uievents/#interface-compositionevent)
+   * [`InputEvent`](://w3c.github.io/uievents/#interface-inputevent)
+  * [`AnimationEvent`](://drafts.csswg.org/css-animations/#interface-animationevent)
+  * [`BeforeUnloadEvent`](://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
+  * [`ClipboardEvent`](://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
+  * [`CloseEvent`](://html.spec.whatwg.org/multipage/comms.html#closeevent)
+  * [`CustomEvent`](://dom.spec.whatwg.org/#interface-customevent)
+  * [`FontFaceEvent`](://wiki.csswg.org/spec/font-load-events)
+
 ## What is Not Serialized?
 
 Following properties are not serialized:
