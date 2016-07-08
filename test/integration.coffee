@@ -41,6 +41,18 @@ testParams = [
     }
     '[:BeforeUnloadEvent|yay!|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
+  [
+    'CloseEvent'
+    'close'
+    {
+      bubbles: false
+      cancelable: false
+      code: 1000
+      reason: ''
+      wasClean: true
+    }
+    '[:CloseEvent|close|#f|#f|#1000|#|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
 ]
 
 

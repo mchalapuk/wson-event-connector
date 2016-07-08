@@ -7,6 +7,7 @@ var constructors = {
   'Event': withProperties(),
   'AnimationEvent': withProperties('animationName', 'elapsedTime', 'pseudoElement'),
   'BeforeUnloadEvent': withProperties(),
+  'CloseEvent': withProperties('code', 'reason', 'wasClean'),
 };
 
 function forAllEventInterfaces(namespace) {

@@ -38,6 +38,18 @@ testParams = [
     }
     [ 'beforeunload', false, true, null ]
   ]
+  [
+    'CloseEvent'
+    'close'
+    {
+      bubbles: false
+      cancelable: false
+      code: 1000
+      reason: ''
+      wasClean: true
+    }
+    [ 'close', false, false, 1000, '', true, null ]
+  ]
 ]
 
 window = null

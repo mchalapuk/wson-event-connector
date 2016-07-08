@@ -14,8 +14,16 @@ module.exports = (window) ->
       @returnValue = null
       super(eventType, properties)
 
-  window.AnimationEvent = AnimationEvent
-  window.BeforeUnloadEvent = BeforeUnloadEvent
+  class CloseEvent extends window.Event
+    constructor: (eventType, properties)->
+      @code = properties.code
+      @wasClean = properties.wasClean
+      @reason = properties.reason
+      super(eventType, properties)
+
+  window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
+  window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
+  window.CloseEvent = CloseEvent if !window.CloseEvent?
 
   window
 
