@@ -14,64 +14,38 @@ testParams = [
   [
     'Event'
     'generic'
-    {
-      bubbles: false
-      cancelable: false
-    }
-    '[:Event|generic|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    { bubbles: true, cancelable: true }
+    '[:Event|generic|#t|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'AnimationEvent'
     'test'
-    {
-      bubbles: false
-      cancelable: false
-      animationName: 'testAnim'
-      elapsedTime: 100
-      pseudoElement: 'pseudo'
-    }
-    '[:AnimationEvent|test|#f|#f|testAnim|#100|pseudo|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    { bubbles: true, animationName: 'testAnim', elapsedTime: 100, pseudoElement: 'pseudo' }
+    '[:AnimationEvent|test|#t|#f|testAnim|#100|pseudo|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'BeforeUnloadEvent'
     'yay!'
-    {
-      bubbles: false
-      cancelable: false
-    }
+    {}
     '[:BeforeUnloadEvent|yay!|#f|#f|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'ClipboardEvent'
     'copy'
-    {
-      bubbles: false
-      cancelable: false
-      data: 'https://github.com/'
-    }
-    '[:ClipboardEvent|copy|#f|#f|text/plain|https`i//github.com/|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    { cancelable: true, data: 'https://github.com/' }
+    '[:ClipboardEvent|copy|#f|#t|text/plain|https`i//github.com/|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'CloseEvent'
     'close'
-    {
-      bubbles: false
-      cancelable: false
-      code: 1000
-      reason: ''
-      wasClean: true
-    }
-    '[:CloseEvent|close|#f|#f|#1000|#|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    { bubbles: true, cancelable: true, code: 1000, reason: '', wasClean: true }
+    '[:CloseEvent|close|#t|#t|#1000|#|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'CustomEvent'
     'chat'
-    {
-      bubbles: false
-      cancelable: false
-      detail: '@Jerry'
-    }
-    '[:CustomEvent|chat|#f|#f|@Jerry|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    { bubbles: true, cancelable: true, detail: '@Jerry' }
+    '[:CustomEvent|chat|#t|#t|@Jerry|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
 ]
 

@@ -11,64 +11,38 @@ testParams = [
   [
     'Event'
     'generic'
-    {
-      bubbles: false
-      cancelable: false
-    }
+    { bubbles: false, cancelable: false }
     [ 'generic', false, false, null ]
   ]
   [
     'AnimationEvent'
     'test'
-    {
-      bubbles: false
-      cancelable: true
-      animationName: 'testAnim'
-      elapsedTime: 100
-      pseudoElement: 'pseudo'
-    }
+    { cancelable: true, animationName: 'testAnim', elapsedTime: 100, pseudoElement: 'pseudo' }
     [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
   ]
   [
     'BeforeUnloadEvent'
     'beforeunload'
-    {
-      bubbles: false
-      cancelable: true
-    }
+    { cancelable: true  }
     [ 'beforeunload', false, true, null ]
   ]
   [
     'ClipboardEvent'
     'copy'
-    {
-      bubbles: true
-      cancelable: true
-      data: 'https://github.com/'
-    }
+    { bubbles: true, cancelable: true, data: 'https://github.com/' }
     [ 'copy', true, true, 'text/plain', 'https://github.com/', null ]
     { data: (e)->e.clipboardData.getData('text/plain') }
   ]
   [
     'CloseEvent'
     'close'
-    {
-      bubbles: false
-      cancelable: false
-      code: 1000
-      reason: ''
-      wasClean: true
-    }
+    { bubbles: false, cancelable: false, code: 1000, reason: '', wasClean: true }
     [ 'close', false, false, 1000, '', true, null ]
   ]
   [
     'CustomEvent'
     'chat'
-    {
-      bubbles: false
-      cancelable: false
-      detail: '@Matilda'
-    }
+    { bubbles: false, cancelable: false, detail: '@Matilda' }
     [ 'chat', false, false, '@Matilda', null ]
   ]
 ]
