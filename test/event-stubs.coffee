@@ -36,11 +36,18 @@ module.exports = (window) ->
       @reason = properties.reason
       super eventType, properties
 
+  class InputEvent extends window.UIEvent
+    constructor: (eventType, properties)->
+      @data = properties.data
+      @isComposing = properties.isComposing
+      super eventType, properties
+
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
   window.ClipboardEvent = ClipboardEvent if !window.ClipboardEvent?
   window.CompositionEvent = CompositionEvent if !window.CompositionEvent?
   window.CloseEvent = CloseEvent if !window.CloseEvent?
+  window.InputEvent = InputEvent if !window.InputEvent?
 
   window
 

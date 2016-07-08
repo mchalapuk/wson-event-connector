@@ -17,13 +17,16 @@ testParams = [
   [
     'AnimationEvent'
     'test'
-    { cancelable: true, animationName: 'testAnim', elapsedTime: 100, pseudoElement: 'pseudo' }
+    {
+      bubbles: false, cancelable: true
+      animationName: 'testAnim', elapsedTime: 100, pseudoElement: 'pseudo'
+    }
     [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
   ]
   [
     'BeforeUnloadEvent'
     'beforeunload'
-    { cancelable: true  }
+    { bubbles: false, cancelable: true  }
     [ 'beforeunload', false, true, null ]
   ]
   [
@@ -50,6 +53,12 @@ testParams = [
     'chat'
     { bubbles: false, cancelable: false, detail: { contact: '@Matilda' } }
     [ 'chat', false, false, { contact: '@Matilda' }, null ]
+  ]
+  [
+    'InputEvent'
+    'beforeinput'
+    { bubbles: true, cancelable: false, detail: 0, data: '', isComposing: false }
+    [ 'beforeinput', true, false, 0, '', false, null, null ]
   ]
   [
     'UIEvent'

@@ -54,6 +54,12 @@ testParams = [
     '[:CustomEvent|chat|#t|#t|{contact:@Jerry}|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
+    'InputEvent'
+    'beforeinput'
+    { cancelable: true, data: '', isComposing: false }
+    '[:InputEvent|beforeinput|#f|#t|#0|#|#f|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 1 }

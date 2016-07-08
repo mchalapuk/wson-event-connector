@@ -33,6 +33,7 @@ var constructors = {
   'CloseEvent': construct(EventConnector).withProperties('code', 'reason', 'wasClean'),
   'CompositionEvent': construct(EventConnector).withProperties('data', 'locale', 'view'),
   'CustomEvent': construct(EventConnector).withProperties('detail'),
+  'InputEvent': construct(UIEventConnector).withProperties('data', 'isComposing'),
   'UIEvent': UIEventConnector,
 };
 
@@ -93,7 +94,7 @@ function construct(Connector) {
       var additionalKeys = [].slice.call(arguments);
 
       return function(Event) {
-        return new EventConnector(Event, additionalKeys);
+        return new Connector(Event, additionalKeys);
       };
     },
   };
