@@ -82,16 +82,16 @@ console.log(wson.stringify(new window.MouseEvent('click')));
 
 Following events types are currently supported:
 
- * [`Event`](://dom.spec.whatwg.org/#interface-event)
-  * [`UIEvent`](://w3c.github.io/uievents/#interface-uievent)
-   * [`CompositionEvent`](://w3c.github.io/uievents/#interface-compositionevent)
-   * [`InputEvent`](://w3c.github.io/uievents/#interface-inputevent)
-  * [`AnimationEvent`](://drafts.csswg.org/css-animations/#interface-animationevent)
-  * [`BeforeUnloadEvent`](://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
-  * [`ClipboardEvent`](://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
-  * [`CloseEvent`](://html.spec.whatwg.org/multipage/comms.html#closeevent)
-  * [`CustomEvent`](://dom.spec.whatwg.org/#interface-customevent)
-  * [`FontFaceEvent`](://wiki.csswg.org/spec/font-load-events)
+ * [`Event`](https://dom.spec.whatwg.org/#interface-event)
+  * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent)
+    * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent)
+    * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
+  * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
+  * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
+  * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
+  * [`CloseEvent`](https://html.spec.whatwg.org/multipage/comms.html#closeevent)
+  * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent)
+  * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events)
 
 ## What is Not Serialized?
 
@@ -99,11 +99,11 @@ Following properties are not serialized:
 
  * Properties, which can be set only in event listener by calling methods
   on event object ([`Event.defaultPrevented`][default-prevented],
-  [`Event.cancelBubble`][cancelBubble]),
+  [`Event.cancelBubble`][cancel-bubble]),
  * Properties, which values are set by the browser during an event dispatch
   ([`Event.currentTarget`][current-target], [`Event.eventPhase`][event-phase],
   [`Event.timeStamp`][time-stamp], [`Event.isTrusted`][is-trusted]),
- * [`UIEvent.sourceCapabilities`][sourceCapabilities], because it's just
+ * [`UIEvent.sourceCapabilities`][source-capabilities], because it's just
   ridiculous to pass the same information in each event.
 
 [default-prevented]: https://developer.mozilla.org/en-US/docs/Web/API/Event/defaultPrevented
@@ -116,7 +116,7 @@ Following properties are not serialized:
 
 Serialization of following event classes is not implemented in this module:
 
- * [BlobEvent][blob-event], because [Blob][blob]'s content can't be fetched
+ * [`BlobEvent`][blob-event], because [`Blob`][blob]'s content can't be fetched
    from JavaScript.
 
 [blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
