@@ -42,8 +42,14 @@ testParams = [
   [
     'CustomEvent'
     'chat'
-    { bubbles: false, cancelable: false, detail: '@Matilda' }
-    [ 'chat', false, false, '@Matilda', null ]
+    { bubbles: false, cancelable: false, detail: { contact: '@Matilda' } }
+    [ 'chat', false, false, { contact: '@Matilda' }, null ]
+  ]
+  [
+    'UIEvent'
+    'swipe'
+    { bubbles: true, cancelable: true, detail: 10 }
+    [ 'swipe', true, true, 10, null, null ]
   ]
 ]
 
@@ -76,7 +82,7 @@ for params in testParams
       describe ".create", ->
         it "should return instance of #{eventName}", ->
           created = testedConnector.create expectedSplit
-          getters[key](created).should.equal properties[key] for key in Object.keys properties
+          getters[key](created).should.be.eql properties[key] for key in Object.keys properties
           created.type.should.equal eventType
           created.constructor.should.equal window[eventName]
 

@@ -83,11 +83,13 @@ console.log(wson.stringify(new window.MouseEvent('click')));
 Following properties are not serialized:
 
  * Properties, which can be set only in event listener by calling methods
-   on event object ([`Event.defaultPrevented`][default-prevented],
-   [`Event.cancelBubble`][cancelBubble]),
+  on event object ([`Event.defaultPrevented`][default-prevented],
+  [`Event.cancelBubble`][cancelBubble]),
  * Properties, which values are set by the browser during an event dispatch
-   ([`Event.currentTarget`][current-target], [`Event.eventPhase`][event-phase],
-   [`Event.timeStamp`][time-stamp], [`Event.isTrusted`][is-trusted]).
+  ([`Event.currentTarget`][current-target], [`Event.eventPhase`][event-phase],
+  [`Event.timeStamp`][time-stamp], [`Event.isTrusted`][is-trusted]),
+ * [`UIEvent.sourceCapabilities`][sourceCapabilities], because it's just
+  ridiculous to pass the same information in each event.
 
 [default-prevented]: https://developer.mozilla.org/en-US/docs/Web/API/Event/defaultPrevented
 [cancel-bubble]: https://developer.mozilla.org/en-US/docs/Web/API/Event/cancelBubble
@@ -95,8 +97,7 @@ Following properties are not serialized:
 [event-phase]: https://developer.mozilla.org/en-US/docs/Web/API/Event/eventPhase
 [time-stamp]: https://developer.mozilla.org/en-US/docs/Web/API/Event/timeStamp
 [is-trusted]: https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
-
-## Unsupported Events
+[source-capabilities]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/sourceCapabilities
 
 Serialization of following event classes is not implemented in this module:
 

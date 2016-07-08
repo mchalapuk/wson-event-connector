@@ -44,8 +44,14 @@ testParams = [
   [
     'CustomEvent'
     'chat'
-    { bubbles: true, cancelable: true, detail: '@Jerry' }
-    '[:CustomEvent|chat|#t|#t|@Jerry|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    { bubbles: true, cancelable: true, detail: { contact: '@Jerry' } }
+    '[:CustomEvent|chat|#t|#t|{contact:@Jerry}|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
+    'UIEvent'
+    'swipe'
+    { bubbles: true, cancelable: true, detail: 1 }
+    '[:UIEvent|swipe|#t|#t|#1|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
 ]
 
@@ -68,8 +74,13 @@ describe "WSON with all Event and DOM connectors", ->
       do (params) ->
         [eventName, eventType, properties, expectedString] = params
 
-        it "should serialize #{eventName}", ->
+        event = null
+
+        beforeEach ->
+          properties.view = window # for UI events
           event = new window[eventName] eventType, properties
+
+        it "should serialize #{eventName}", ->
           serialized = null
           body.addEventListener eventType, -> serialized = testedWSON.stringify event
           body.dispatchEvent event
@@ -81,8 +92,8 @@ describe "WSON with all Event and DOM connectors", ->
         [eventName, eventType, properties, expectedString] = params
 
         it "should parse #{expectedString}", ->
-          event = new window[eventName] eventType, properties
           deserialized = testedWSON.parse expectedString
           deserialized.type.should.be.exactly eventType
           deserialized.parsedTarget.should.be.exactly body
+          (deserialized.view is window).should.be.true if deserialized instanceof window.UIEvent
 

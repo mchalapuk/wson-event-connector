@@ -3,13 +3,36 @@
 
 module.exports = forAllEventInterfaces;
 
+function EventConnector(Event, additionalKeys) {
+  var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat([ 'target' ]);
+  return new PropertyBasedConnector(Event, keys);
+}
+
+function UIEventConnector(Event, additionalKeys) {
+  return new EventConnector(Event, [ 'detail' ].concat(additionalKeys || []).concat([ 'view' ]));
+}
+
+function ClipboardEventConnector(Event) {
+  var connector = new EventConnector(Event, ['dataType', 'data']);
+
+  var format = 'text/plain';
+  connector.split = pipe(connector.split, function(args, e) {
+    args[connector.indexOf('dataType')] = format;
+    args[connector.indexOf('data')] = e.clipboardData.getData(format);
+    return args;
+  });
+  return connector;
+}
+
 var constructors = {
   'Event': EventConnector,
-  'AnimationEvent': withProperties('animationName', 'elapsedTime', 'pseudoElement'),
+  'AnimationEvent': construct(EventConnector)
+    .withProperties('animationName', 'elapsedTime', 'pseudoElement'),
   'BeforeUnloadEvent': EventConnector,
   'ClipboardEvent': ClipboardEventConnector,
-  'CloseEvent': withProperties('code', 'reason', 'wasClean'),
-  'CustomEvent': withProperties('detail'),
+  'CloseEvent': construct(EventConnector).withProperties('code', 'reason', 'wasClean'),
+  'CustomEvent': construct(EventConnector).withProperties('detail'),
+  'UIEvent': UIEventConnector,
 };
 
 function forAllEventInterfaces(namespace) {
@@ -27,35 +50,14 @@ function forAllEventInterfaces(namespace) {
   return connectors;
 }
 
-function withProperties() {
-  var additionalKeys = [].slice.call(arguments)
-  return function(Event) {
-    return new EventConnector(Event, additionalKeys);
-  };
-}
 
-function EventConnector(Event, additionalKeys) {
-  var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat( [ 'target' ] );
-
+function PropertyBasedConnector(Event, keys) {
   return {
     by: Event,
     split: splitProperties(keys),
     create: createWithProperties(Event, keys),
+    indexOf: indexOf([ 'type' ].concat(keys)),
   }
-}
-
-function ClipboardEventConnector(Event) {
-  var format = 'text/plain';
-
-  function split(e) {
-    return [ e.type, e.bubbles, e.cancelable, format, e.clipboardData.getData(format), e.target ];
-  }
-
-  return {
-    by: Event,
-    split: split,
-    create: createWithProperties(Event, ['bubbles', 'cancelable', 'dataType', 'data', 'target']),
-  };
 }
 
 function splitProperties(keys) {
@@ -75,6 +77,32 @@ function createWithProperties(Event, keys) {
     // during call to Element.dispatchEvent().
     e.parsedTarget = properties.target;
     return e;
+  };
+}
+
+function indexOf(keys) {
+  return function(key) {
+    return keys.indexOf(key);
+  };
+}
+
+function construct(Connector) {
+  return {
+    withProperties: function () {
+      var additionalKeys = [].slice.call(arguments);
+
+      return function(Event) {
+        return new EventConnector(Event, additionalKeys);
+      };
+    },
+  };
+}
+
+function pipe(previous, next) {
+  return function() {
+    var args = [].slice.call(arguments);
+    var retVal = previous.apply(null, args);
+    return next.apply(null, [ retVal ].concat(args));
   };
 }
 

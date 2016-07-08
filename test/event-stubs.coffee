@@ -12,7 +12,7 @@ module.exports = (window) ->
   class BeforeUnloadEvent extends window.Event
     constructor: (eventType, properties)->
       @returnValue = null
-      super(eventType, properties)
+      super eventType, properties
 
   class TransferData
     constructor: (data)-> @data = data
@@ -21,19 +21,27 @@ module.exports = (window) ->
   class ClipboardEvent extends window.Event
     constructor: (eventType, properties)->
       @clipboardData = new TransferData properties.data
-      super(eventType, properties)
+      super eventType, properties
 
   class CloseEvent extends window.Event
     constructor: (eventType, properties)->
       @code = properties.code
       @wasClean = properties.wasClean
       @reason = properties.reason
-      super(eventType, properties)
+      super eventType, properties
+
+  class UIEvent extends window.Event
+    constructor: (eventType, properties)->
+      @detail = properties.detail
+      @sourceCapabilities = properties.sourceCapabilities
+      @view = properties.view
+      super eventType, properties
 
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
   window.ClipboardEvent = ClipboardEvent if !window.ClipboardEvent?
   window.CloseEvent = CloseEvent if !window.CloseEvent?
+  window.UIEvent = UIEvent if !window.UIEvent?
 
   window
 
