@@ -97,17 +97,24 @@ Following events types are currently supported:
 
 Following properties are not serialized:
 
- * Properties, which can be set only in event listener by calling methods
-  on event object ([`Event.defaultPrevented`][default-prevented],
-  [`Event.cancelBubble`][cancel-bubble]),
- * Properties, which values are set by the browser during an event dispatch
-  ([`Event.currentTarget`][current-target], [`Event.eventPhase`][event-phase],
-  [`Event.timeStamp`][time-stamp], [`Event.isTrusted`][is-trusted]),
+ * [`Event.defaultPrevented`][default-prevented], because initial value
+  of this property is always `true` ([`Event.preventDefault()`][prevent-default]
+  called inside an event listener changes it to `false`).
+  The whole point of event serialization is to be able to dispatch them
+  on another instance of window containing the same HTML document.
+  Properties need to be in initial (pre-dispatch) value in order for event
+  listeners to work properly.
+ * Properties, which contain meta-information about event and current
+   state of its propagation ([`Event.currentTarget`][current-target],
+  [`Event.eventPhase`][event-phase], [`Event.timeStamp`][time-stamp],
+  [`Event.isTrusted`][is-trusted]). Values of these properties are
+  changed by the browser during event dispatch and they cannot are
+  be set from JavaScript.
  * [`UIEvent.sourceCapabilities`][source-capabilities], because it's just
   ridiculous to pass the same information in each event.
 
 [default-prevented]: https://developer.mozilla.org/en-US/docs/Web/API/Event/defaultPrevented
-[cancel-bubble]: https://developer.mozilla.org/en-US/docs/Web/API/Event/cancelBubble
+[prevent-default]: https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
 [current-target]: https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
 [event-phase]: https://developer.mozilla.org/en-US/docs/Web/API/Event/eventPhase
 [time-stamp]: https://developer.mozilla.org/en-US/docs/Web/API/Event/timeStamp
