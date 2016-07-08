@@ -31,6 +31,7 @@ var constructors = {
   'BeforeUnloadEvent': EventConnector,
   'ClipboardEvent': ClipboardEventConnector,
   'CloseEvent': construct(EventConnector).withProperties('code', 'reason', 'wasClean'),
+  'CompositionEvent': construct(EventConnector).withProperties('data', 'locale', 'view'),
   'CustomEvent': construct(EventConnector).withProperties('detail'),
   'UIEvent': UIEventConnector,
 };

@@ -40,6 +40,12 @@ testParams = [
     [ 'close', false, false, 1000, '', true, null ]
   ]
   [
+    'CompositionEvent'
+    'start'
+    { bubbles: true, cancelable: true, data: 'deleted text', locale: 'C' }
+    [ 'start', true, true, 'deleted text', 'C', null, null ]
+  ]
+  [
     'CustomEvent'
     'chat'
     { bubbles: false, cancelable: false, detail: { contact: '@Matilda' } }

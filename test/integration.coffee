@@ -42,6 +42,12 @@ testParams = [
     '[:CloseEvent|close|#t|#t|#1000|#|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
+    'CompositionEvent'
+    'start'
+    { bubbles: true, cancelable: true, data: 'deleted text', locale: 'C' }
+    '[:CompositionEvent|start|#t|#t|deleted text|C|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'CustomEvent'
     'chat'
     { bubbles: true, cancelable: true, detail: { contact: '@Jerry' } }

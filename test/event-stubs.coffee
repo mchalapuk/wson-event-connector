@@ -23,6 +23,12 @@ module.exports = (window) ->
       @clipboardData = new TransferData properties.data
       super eventType, properties
 
+  class CompositionEvent extends window.UIEvent
+    constructor: (eventType, properties)->
+      @data = properties.data
+      @locale = properties.locale
+      super eventType, properties
+
   class CloseEvent extends window.Event
     constructor: (eventType, properties)->
       @code = properties.code
@@ -30,18 +36,11 @@ module.exports = (window) ->
       @reason = properties.reason
       super eventType, properties
 
-  class UIEvent extends window.Event
-    constructor: (eventType, properties)->
-      @detail = properties.detail
-      @sourceCapabilities = properties.sourceCapabilities
-      @view = properties.view
-      super eventType, properties
-
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
   window.ClipboardEvent = ClipboardEvent if !window.ClipboardEvent?
+  window.CompositionEvent = CompositionEvent if !window.CompositionEvent?
   window.CloseEvent = CloseEvent if !window.CloseEvent?
-  window.UIEvent = UIEvent if !window.UIEvent?
 
   window
 
