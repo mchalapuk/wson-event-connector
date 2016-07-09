@@ -1,7 +1,36 @@
 // license: MIT
 'use strict';
 
-module.exports = forAllEventInterfaces;
+var constructors = {
+  'Event': EventConnector,
+  'AnimationEvent': extend(EventConnector)
+    .withProperties('animationName', 'elapsedTime', 'pseudoElement'),
+  'BeforeUnloadEvent': EventConnector,
+  'ClipboardEvent': ClipboardEventConnector,
+  'CloseEvent': extend(EventConnector).withProperties('code', 'reason', 'wasClean'),
+  'CompositionEvent': extend(EventConnector).withProperties('data', 'locale', 'view'),
+  'CustomEvent': extend(EventConnector).withProperties('detail'),
+  'FontFaceEvent': extend(EventConnector).withProperties('family', 'src', 'usedSrc', 'style',
+      'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'),
+  'InputEvent': extend(UIEventConnector).withProperties('data', 'isComposing'),
+  'UIEvent': UIEventConnector,
+};
+
+module.exports = function getAllConnectors(namespace) {
+  check(typeof namespace === 'object', 'Passed namespace is not an object.');
+
+  var connectors = {};
+  Object.keys(constructors)
+    .filter(function(name) { return typeof namespace[name] === 'function'; })
+    .forEach(function(name) { connectors[name] = constructors[name](namespace[name]); });
+  return connectors;
+}
+
+Object.keys(constructors).forEach(function(name) {
+  module.exports[name] = constructors[name];
+});
+
+module.exports.PropertyBasedConnector = PropertyBasedConnector;
 
 function EventConnector(Event, additionalKeys) {
   var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat([ 'target' ]);
@@ -24,43 +53,14 @@ function ClipboardEventConnector(Event) {
   return connector;
 }
 
-var constructors = {
-  'Event': EventConnector,
-  'AnimationEvent': construct(EventConnector)
-    .withProperties('animationName', 'elapsedTime', 'pseudoElement'),
-  'BeforeUnloadEvent': EventConnector,
-  'ClipboardEvent': ClipboardEventConnector,
-  'CloseEvent': construct(EventConnector).withProperties('code', 'reason', 'wasClean'),
-  'CompositionEvent': construct(EventConnector).withProperties('data', 'locale', 'view'),
-  'CustomEvent': construct(EventConnector).withProperties('detail'),
-  'FontFaceEvent': construct(EventConnector).withProperties('family', 'src', 'usedSrc', 'style',
-      'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'),
-  'InputEvent': construct(UIEventConnector).withProperties('data', 'isComposing'),
-  'UIEvent': UIEventConnector,
-};
-
-function forAllEventInterfaces(namespace) {
-  if (!namespace) {
-    throw new Error('Passed namespace is not an object.');
-  }
-
-  var connectors = {};
-  Object.keys(constructors).forEach(function(name) {
-    if (typeof namespace[name] === 'undefined') {
-      return;
-    }
-    connectors[name] = constructors[name](namespace[name]);
-  });
-  return connectors;
-}
-
-
 function PropertyBasedConnector(Event, keys) {
+  check(typeof Event === 'function', 'Event must be a function.')
+
   return {
     by: Event,
     split: splitProperties(keys),
     create: createWithProperties(Event, keys),
-    indexOf: indexOf([ 'type' ].concat(keys)),
+    indexOf: indexOf(keys),
   }
 }
 
@@ -86,17 +86,17 @@ function createWithProperties(Event, keys) {
 
 function indexOf(keys) {
   return function(key) {
-    return keys.indexOf(key);
+    return [ 'type' ].concat(keys).indexOf(key);
   };
 }
 
-function construct(Connector) {
+function extend(Connector) {
   return {
     withProperties: function () {
       var additionalKeys = [].slice.call(arguments);
 
-      return function(Event) {
-        return new Connector(Event, additionalKeys);
+      return function(Event, evenMoreKeys) {
+        return new Connector(Event, additionalKeys.concat(evenMoreKeys || []));
       };
     },
   };
@@ -108,5 +108,11 @@ function pipe(previous, next) {
     var retVal = previous.apply(null, args);
     return next.apply(null, [ retVal ].concat(args));
   };
+}
+
+function check(condition, message) {
+  if (!condition) {
+    throw new Error(message);
+  }
 }
 

@@ -96,7 +96,7 @@ for params in testParams
       event = null
 
       beforeEach ->
-        testedConnector = connectors(window)[eventName]
+        testedConnector = connectors[eventName] window[eventName]
         event = new window[eventName] eventType, properties
 
       describe ".by", ->
