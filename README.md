@@ -53,8 +53,14 @@ var wson = new WSON({
   connectors: eventConnectors(window)
   });
 
-console.log(wson.stringify(new window.MouseEvent('click')));
-// TODO
+function logEvent(e) {
+  console.log(wson.stringify(e));
+}
+
+var events = [ 'load', 'error', 'focus', 'blur', 'resize', 'scroll', 'unload' ];
+events.forEach(function(name) {
+  window.addEventListener(name, logEvent);
+});
 ```
 
 ...or in [node][node] with any standard-compliant DOM implementation
