@@ -114,6 +114,7 @@ Following events types are currently supported:
     * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
     * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent)
     * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)
+      * [`PointerEvent`](https://w3c.github.io/pointerevents/#pointerevent-interface)
       * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent)
   * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
   * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)

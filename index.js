@@ -17,9 +17,12 @@ var constructors = {
   'KeyboardEvent': extend(ModifierEventConnector)
     .withProperties('key', 'code', 'location', 'repeat', 'isComposing'),
   'MouseEvent': MouseEventConnector,
+  'PointerEvent': extend(MouseEventConnector)
+    .withProperties('pointerId', 'width', 'height', 'pressure', 'tangentialPressure',
+        'tiltX', 'tiltY', 'twist', 'pointerType', 'isPrimary'),
   'UIEvent': UIEventConnector,
   'WheelEvent': extend(MouseEventConnector)
-      .withProperties('deltaX', 'deltaY', 'deltaZ', 'deltaMode'),
+    .withProperties('deltaX', 'deltaY', 'deltaZ', 'deltaMode'),
 };
 
 module.exports = function getAllConnectors(namespace) {

@@ -46,6 +46,10 @@ module.exports = (window) ->
   MouseEvent = extend ModifierEvent, {
     screenX: 0, screenY: 0, clientX: 0, clientY: 0, button: 0, buttons: 0, relatedTarget: null
   }
+  PointerEvent = extend MouseEvent, {
+    pointerId: 0, width: 1, height: 1, pressure: 0, tangentialPressure: 0,
+    tiltX: 0, tiltY: 0, twist: 0, pointerType: "", isPrimary: false,
+  }
   WheelEvent = extend MouseEvent, {
     deltaX: 0.0, deltaY: 0.0, deltaZ: 0.0, deltaMode: 0
   }
@@ -58,6 +62,7 @@ module.exports = (window) ->
   window.FontFaceEvent = FontFaceEvent if !window.FontFaceEvent?
   window.KeyboardEvent = KeyboardEvent #if !window.KeyboardEvent?
   window.MouseEvent = MouseEvent #if !window.MouseEvent?
+  window.PointerEvent = PointerEvent #if !window.PointerEvent?
   window.WheelEvent = WheelEvent #if !window.WheelEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
 

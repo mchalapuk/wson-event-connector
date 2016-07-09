@@ -71,6 +71,12 @@ testParams = [
     '[:FontFaceEvent|load|#f|#f|Arial|file`i//Arial.ttf|file`i//Arial.ttf|normal|bold|normal|unset|normal|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]',
   ]
   [
+    'InputEvent'
+    'beforeinput'
+    { cancelable: true, data: '', isComposing: false }
+    '[:InputEvent|beforeinput|#f|#t|#0|#|#f|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'KeyboardEvent'
     'keyup'
     {
@@ -95,10 +101,14 @@ testParams = [
     '[:MouseEvent|click|#f|#f|#0|#16383|#100|#200|#300|#400|#1|#3|[:Document]|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
-    'InputEvent'
-    'beforeinput'
-    { cancelable: true, data: '', isComposing: false }
-    '[:InputEvent|beforeinput|#f|#t|#0|#|#f|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    'PointerEvent'
+    'pointerdown'
+    {
+      altKey: true, screenX: 100, screenY: 200, clientX: 30, clientY: 40,
+      pointerId: 4, width: 2, height: 2, pressure: 1, tangentialPressure: 1,
+      tiltX: 20, tiltY: -15, twist: 4, pointerType: 'pen', isPrimary: true,
+    }
+    '[:PointerEvent|pointerdown|#f|#f|#0|#4|#100|#200|#30|#40|#0|#0|#4|#2|#2|#1|#1|#20|#-15|#4|pen|#t|[:Document]|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'UIEvent'

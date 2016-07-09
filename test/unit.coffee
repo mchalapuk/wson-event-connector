@@ -99,12 +99,29 @@ testParams = [
     'click'
     {
       detail: 0, ctrlKey: true, shiftKey: true, altKey: true, metaKey: true,
-      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock: true,
       modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
       modifierSymbol: true, modifierSymbolLock: true,
       screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
     }
-    [ 'click', false, false, 0, (16383), 100, 200, 300, 400, 1, 3, null, null, null ]
+    [ 'click', false, false, 0, 16383, 100, 200, 300, 400, 1, 3, null, null, null ]
+  ]
+  [
+    'PointerEvent'
+    'pointerup'
+    {
+      detail: 0, ctrlKey: false, shiftKey: false, altKey: true, metaKey: false,
+      modifierAltGraph: false, modifierCapsLock: false, modifierFn: false, modifierFnLock: false,
+      modifierHyper: false, modifierNumLock: false, modifierScrollLock: false, modifierSuper: false,
+      modifierSymbol: false, modifierSymbolLock: false,
+      screenX: 100, screenY: 200, clientX: 30, clientY: 40, button: 0, buttons: 0,
+      pointerId: 4, width: 2, height: 2, pressure: 1, tangentialPressure: 1,
+      tiltX: 20, tiltY: -15, twist: 4, pointerType: 'pen', isPrimary: true,
+    }
+    [
+      'pointerup', false, false, 0, 4, 100, 200, 30, 40, 0, 0,
+      4, 2, 2, 1, 1, 20, -15,4, 'pen', true, null, null, null
+    ]
   ]
   [
     'UIEvent'
