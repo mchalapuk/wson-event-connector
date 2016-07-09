@@ -103,6 +103,7 @@ Following events types are currently supported:
   * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent)
     * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent)
     * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
+    * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)
   * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
   * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
   * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
