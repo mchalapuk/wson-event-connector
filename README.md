@@ -101,15 +101,19 @@ Serialization of following event classes is not implemented in this module:
    from JavaScript.
  * [`SensorReadingEvent`][sensor-reading-event], as it's not implemented by any
    browser.
- * Non-standard vendor-specific events.
+ * Non-standard vendor-specific events and properties. These should be
+   implemented in separate module (e.g. `wson-mozilla-controller`).
+   This module exports many JavaScript classes which simplifies this task
+   (check the [source code][code] for details).
 
 [blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
 [blob]: https://developer.mozilla.org/en-US/docs/Web/API/Blob
 [sensor-reading-event]: https://w3c.github.io/sensors/#the-sensor-reading-event-interface
+[code]: index.js
 
-## Properties Not Serialized?
+## Why are some properties not serialized?
 
-Following properties are not serialized:
+Following properties are by default not serialized:
 
  * [`Event.defaultPrevented`][default-prevented], because initial value
   of this property is always `true` ([`Event.preventDefault()`][prevent-default]
@@ -136,6 +140,7 @@ Following properties are not serialized:
 [source-capabilities]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/sourceCapabilities
 
 ## API
+
 Please refer to [wson's documentation][wson] for further details.
 
 ## License
