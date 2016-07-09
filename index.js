@@ -41,8 +41,8 @@ function UIEventConnector(Event, additionalKeys) {
   return new EventConnector(Event, [ 'detail' ].concat(additionalKeys || []).concat([ 'view' ]));
 }
 
-function ClipboardEventConnector(Event) {
-  var connector = new EventConnector(Event, ['dataType', 'data']);
+function ClipboardEventConnector(Event, additionalKeys) {
+  var connector = new EventConnector(Event, ['dataType', 'data'].concat(additionalKeys || []));
 
   var format = 'text/plain';
   connector.split = pipe(connector.split, function(args, e) {
@@ -54,14 +54,15 @@ function ClipboardEventConnector(Event) {
 }
 
 function PropertyBasedConnector(Event, keys) {
-  check(typeof Event === 'function', 'Event must be a function.')
+  check(typeof Event === 'function', 'Event must be a function.');
+  check(keys instanceof Array, 'keys must be an array of strings');
 
   return {
     by: Event,
     split: splitProperties(keys),
     create: createWithProperties(Event, keys),
     indexOf: indexOf(keys),
-  }
+  };
 }
 
 function splitProperties(keys) {
@@ -79,7 +80,9 @@ function createWithProperties(Event, keys) {
     // Target element is deserialized to parsedTarget non-standard property,
     // because event.target property is read-only and set by the browser
     // during call to Element.dispatchEvent().
-    e.parsedTarget = properties.target;
+    if (typeof properties.target !== 'undefined') {
+      e.parsedTarget = properties.target;
+    }
     return e;
   };
 }

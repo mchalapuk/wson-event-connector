@@ -141,9 +141,66 @@ Following properties are by default not serialized:
 
 ## API
 
-Please refer to [wson's documentation][wson] for further details.
+Following documentation contains API's exported by this module.
+Please refer to [wson's documentation][wson] for information about wson API.
+
+#### exports `exports(window)`
+
+Creates WSON connectors of all events implemented by this module.
+
+```js
+var WSON = require('wson');
+var eventConnectors = require('wson-event-connector');
+
+var wson = new WSON({ connectors: eventConnectors(window) };
+```
+
+#### Event `exports.Event(EventClass, additionalFields)`
+
+Constructs a connector which is able to serialize event instances of passed
+**Class**. Passed class should be derived from `window.Event`. Fields are being
+serialized in following order: ***bubbles***, ***cancelable***,
+**additionalFields**, ***target***.
+
+`Event.target` property is not settable from JavaScript. A web browser sets this
+property to the instance on which `EventTarget.dispatch(event)` was called.
+Value of `Event.target` in deserialized event is `null`. Target is deserialized
+into non-standard **`Event.parsedTarget`** property.
+
+```js
+var WSON = require('wson');
+var EventConnector = require('wson-event-connector').EventConnector;
+
+var wson = new WSON({ connectors: {
+  'Event': new Event(window.Event)
+  }});
+
+var event = wson.parse('[:Event|load|#f|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]');
+event.parsedTarget.dispatchEvent(event);
+```
+
+#### PropertyBasedConnector `exports.PropertyBasedConnector(Class, serializedFields)`
+
+Constructs a connector which is able to serialize instances of passed **Class**.
+There are no requirements regarding serialized class, apart from that is must
+be a class. Constructed connector serializes fields of names passed in
+**serializedFields** array and in order as the occur in this array.
+
+```js
+var WSON = require('wson');
+var PropertyBasedConnector = require('wson-event-connector').PropertyBasedConnector;
+
+var wson = new WSON({ connectors: {
+  'Weather': new PropertyBasedConnector(Weather, [ 'temperature', 'pressure', 'humidity', 'sky' ])
+  }});
+
+var weather = new Weather('27C', '1000HpA', '75%', 'clear');
+console.log(wson.stringify(weather));
+// [:Weather|27C|1000Hpa|75%|clear]
+```
 
 ## License
 
 Copyright &copy; 2016 Maciej Chałapuk.
 Released under [MIT license](LICENSE).
+
