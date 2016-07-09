@@ -39,6 +39,9 @@ module.exports = (window) ->
     constructor: (eventType, properties)-> super eventType, properties
     getModifierState: (key)-> @["modifier#{key}"]
 
+  KeyboardEvent = extend ModifierEvent, {
+    key: null, code: null, location: 0, repeat: false, isComposing: false
+  }
   MouseEvent = extend ModifierEvent, {
     screenX: 0, screenY: 0, clientX: 0, clientY: 0, button: 0, buttons: 0, relatedTarget: null
   }
@@ -49,6 +52,7 @@ module.exports = (window) ->
   window.CompositionEvent = CompositionEvent if !window.CompositionEvent?
   window.CloseEvent = CloseEvent if !window.CloseEvent?
   window.FontFaceEvent = FontFaceEvent if !window.FontFaceEvent?
+  window.KeyboardEvent = KeyboardEvent #if !window.KeyboardEvent?
   window.MouseEvent = MouseEvent #if !window.MouseEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
 

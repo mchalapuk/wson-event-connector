@@ -13,6 +13,8 @@ var constructors = {
   'FontFaceEvent': extend(EventConnector).withProperties('family', 'src', 'usedSrc', 'style',
       'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'),
   'InputEvent': extend(UIEventConnector).withProperties('data', 'isComposing'),
+  'KeyboardEvent': extend(ModifierEventConnector)
+    .withProperties('key', 'code', 'location', 'repeat', 'isComposing'),
   'MouseEvent': extend(ModifierEventConnector) .withProperties('screenX', 'screenY',
       'clientX', 'clientY', 'button', 'buttons', 'relatedTarget'),
   'UIEvent': UIEventConnector,

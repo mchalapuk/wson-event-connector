@@ -77,6 +77,18 @@ testParams = [
     [ 'beforeinput', true, false, 0, '', false, null, null ]
   ]
   [
+    'KeyboardEvent'
+    'keyup'
+    {
+      detail: 0, ctrlKey: true, shiftKey: true, altKey: true, metaKey: true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
+      modifierSymbol: true, modifierSymbolLock: true,
+      key: 'k', code: '75', location: 0, repeat: true, isComposing: false,
+    }
+    [ 'keyup', false, false, 0, 16383, 'k', '75', 0, true, false, null, null ]
+  ]
+  [
     'MouseEvent'
     'click'
     {
