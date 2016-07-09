@@ -72,12 +72,14 @@ events.forEach(function(name) {
 ```javascript
 var WSON = require("wson");
 var eventConnectors = require("wson-event-connector");
+var domConnectors = require("wson-dom-connector");
 var jsdom = require("jsdom");
+var _ = require("underscore");
 
 var window = jsdom.jsdom("<body></body>").defaultView;
 
 var wson = new WSON({
-  connectors: eventConnectors(window)
+  connectors: _.extend(eventConnectors(window), domConnectors(window))
   });
 
 var body = window.document.body;
@@ -94,6 +96,12 @@ body.dispatchEvent(new window.MouseEvent('click', {
 });
 // [:MouseEvent|click|#f|#f|#0|#0|#300|#400|#20|#10|#1|#1|#n|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]
 ```
+
+In order to serialize DOM nodes assigned to event properties (`Event.target`,
+`UIEvent.view`, `MouseEvent.relatedTarget`), connectors from
+[wson-dom-connector][dom-connector] module must be used.
+
+[dom-connector]: https://github.com/webfront-toolkit/wson-dom-connector
 
 ## Supported Events
 
