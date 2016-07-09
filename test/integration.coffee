@@ -65,6 +65,18 @@ testParams = [
     '[:FontFaceEvent|load|#f|#f|Arial|file`i//Arial.ttf|file`i//Arial.ttf|normal|bold|normal|unset|normal|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]',
   ]
   [
+    'MouseEvent'
+    'click'
+    {
+      detail: 0, ctrlKey: true, shiftKey: true, altKey: true, metaKey: true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
+      modifierSymbol: true, modifierSymbolLock: true,
+      screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
+    }
+    '[:MouseEvent|click|#f|#f|#0|#16383|#100|#200|#300|#400|#1|#3|#n|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'InputEvent'
     'beforeinput'
     { cancelable: true, data: '', isComposing: false }

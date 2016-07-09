@@ -2,6 +2,7 @@ mocha = require 'mocha'
 should = require 'should'
 
 jsdom = require 'jsdom'
+_ = require 'underscore'
 declareMissingEvents = require './event-stubs.coffee'
 
 delete require.cache[ require.resolve '../' ]
@@ -76,6 +77,18 @@ testParams = [
     [ 'beforeinput', true, false, 0, '', false, null, null ]
   ]
   [
+    'MouseEvent'
+    'click'
+    {
+      detail: 0, ctrlKey: true, shiftKey: true, altKey: true, metaKey: true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
+      modifierSymbol: true, modifierSymbolLock: true,
+      screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
+    }
+    [ 'click', false, false, 0, (16383), 100, 200, 300, 400, 1, 3, null, null, null ]
+  ]
+  [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 10 }
@@ -111,14 +124,29 @@ for params in testParams
         it "should return instance of #{eventName}", ->
           created = testedConnector.create expectedSplit
           created.type.should.equal eventType
+          if created instanceof window.MouseEvent
+            checkModifiers properties, created
           if created instanceof window.ClipboardEvent
             created.clipboardData.getData(properties.dataFormat).should.equal properties.data
           else
-            checkProperty key, properties[key], created[key] for key in Object.keys properties
+            checkProperties properties, created
           created.constructor.should.equal window[eventName]
 
-checkProperty = (key, expected, actual)->
-  (expected is null).should.be.false "testing against null input in properties.#{key}"
-  (actual is null).should.be.false "event.#{key} should be #{expected}; got null"
-  actual.should.be.eql expected
+checkProperties = (properties, created)->
+  for key in Object.keys properties
+    (key)->
+      expected = properties[key]
+      actual = created[key]
+      (expected is null).should.be.false "testing against null input in properties.#{key}"
+      (actual is expected).should.be.false "event.#{key} should be #{expected}; got #{actual}"
+
+checkModifiers = (properties, created)->
+  modifiers = Object.keys(properties).filter (key)->key.startsWith 'modifier'
+  for key in modifiers
+    do (key)->
+      expected = properties[key]
+      actual = created.getModifierState key.substring 'modifier'.length
+      (expected is null).should.be.false "testing against null input in properties.#{key}"
+      (expected is actual).should.be.true "wrong value of modifier #{key}: #{actual}"
+      delete properties[key]
 

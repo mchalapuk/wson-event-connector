@@ -1,14 +1,16 @@
 'use strict'
 
-extend = (EventClass, propertyNames...) ->
+extend = (EventClass, defaults) ->
   class ExtendedEvent extends EventClass
     constructor: (eventType, properties)->
-      @[key] = properties[key] for key in propertyNames
+      for key in Object.keys defaults
+        do (key)=>
+          @[key] = if typeof properties[key] is 'undefined' then defaults[key] else properties[key]
       super eventType, properties
 
 module.exports = (window) ->
-  AnimationEvent = extend window.Event, 'animationName', 'elapsedTime', 'pseudoElement'
-  BeforeUnloadEvent = extend window.Event, 'returnValue'
+  AnimationEvent = extend window.Event, animationName: null, elapsedTime: 0, pseudoElement: null
+  BeforeUnloadEvent = extend window.Event, returnValue: null
 
   class TransferData
     constructor: (data)-> @data = data
@@ -18,11 +20,28 @@ module.exports = (window) ->
       @clipboardData = new TransferData properties.data
       super eventType, properties
 
-  CompositionEvent = extend window.UIEvent, 'data', 'locale'
-  CloseEvent = extend window.Event, 'code', 'wasClean', 'reason'
-  InputEvent = extend window.UIEvent, 'data', 'isComposing'
-  FontFaceEvent = extend window.Event, 'family', 'src', 'usedSrc',
-        'style', 'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'
+  CompositionEvent = extend window.UIEvent, data: null, locale: null
+  CloseEvent = extend window.Event, code: 0, wasClean: false, reason: null
+  InputEvent = extend window.UIEvent, data: null, isComposing: false
+  FontFaceEvent = extend window.Event, {
+    family: null, src: null, usedSrc: null, style: null,
+    weight: null, stretch: null, unicodeRange: null, variant: null, featureSetting: null
+  }
+
+  class ModifierEvent extends (
+    extend window.UIEvent, {
+      ctrlKey: false, shiftKey: false, altKey: false, metaKey: false,
+      modifierAltGraph: false, modifierCapsLock: false, modifierFn: false, modifierFnLock: false,
+      modifierHyper: false, modifierNumLock: false, modifierScrollLock: false, modifierSuper: false,
+      modifierSymbol: false, modifierSymbolLock: false
+    }
+  )
+    constructor: (eventType, properties)-> super eventType, properties
+    getModifierState: (key)-> @["modifier#{key}"]
+
+  MouseEvent = extend ModifierEvent, {
+    screenX: 0, screenY: 0, clientX: 0, clientY: 0, button: 0, buttons: 0, relatedTarget: null
+  }
 
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
@@ -30,6 +49,7 @@ module.exports = (window) ->
   window.CompositionEvent = CompositionEvent if !window.CompositionEvent?
   window.CloseEvent = CloseEvent if !window.CloseEvent?
   window.FontFaceEvent = FontFaceEvent if !window.FontFaceEvent?
+  window.MouseEvent = MouseEvent #if !window.MouseEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
 
   window

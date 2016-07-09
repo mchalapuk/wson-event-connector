@@ -30,7 +30,7 @@
     "coffee-script": "~1.10.0",
     "jsdom": "^9.4.0",
     "mocha": "*",
-    "should": "~9.0.2",
+    "should": "^9.0.2",
     "underscore": "^1.8.3",
     "wson": "^1.10.0",
     "wson-dom-connector": "^0.5.0"
