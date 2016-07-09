@@ -93,7 +93,21 @@ Following events types are currently supported:
   * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent)
   * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events)
 
-## What is Not Serialized?
+## Unsupported Events
+
+Serialization of following event classes is not implemented in this module:
+
+ * [`BlobEvent`][blob-event], because [`Blob`][blob]'s content can't be fetched
+   from JavaScript.
+ * [`SensorReadingEvent`][sensor-reading-event], as it's not implemented by any
+   browser.
+ * Non-standard vendor-specific events.
+
+[blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
+[blob]: https://developer.mozilla.org/en-US/docs/Web/API/Blob
+[sensor-reading-event]: https://w3c.github.io/sensors/#the-sensor-reading-event-interface
+
+## Properties Not Serialized?
 
 Following properties are not serialized:
 
@@ -120,14 +134,6 @@ Following properties are not serialized:
 [time-stamp]: https://developer.mozilla.org/en-US/docs/Web/API/Event/timeStamp
 [is-trusted]: https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
 [source-capabilities]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/sourceCapabilities
-
-Serialization of following event classes is not implemented in this module:
-
- * [`BlobEvent`][blob-event], because [`Blob`][blob]'s content can't be fetched
-   from JavaScript.
-
-[blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
-[blob]: https://developer.mozilla.org/en-US/docs/Web/API/Blob
 
 ## API
 Please refer to [wson's documentation][wson] for further details.
