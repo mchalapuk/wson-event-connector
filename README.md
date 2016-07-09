@@ -80,8 +80,20 @@ var wson = new WSON({
   connectors: eventConnectors(window)
   });
 
-console.log(wson.stringify(new window.MouseEvent('click')));
-// TODO
+var body = window.document.body;
+body.addEventListener('click', function(event) {
+  console.log(wson.stringify(event)));
+}
+body.dispatchEvent(new window.MouseEvent('click', {
+  screenX: 1000,
+  screenY: 1000,
+  clientX: 300,
+  clientY: 400,
+  button: 1,
+  buttons: 1,
+  view: window,
+});
+// [:MouseEvent|click|#f|#f|#0|#0|#1000|#1000|#300|#400|#1|#1|#n|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]
 ```
 
 ## Supported Events
