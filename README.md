@@ -99,8 +99,8 @@ Serialization of following event classes is not implemented in this module:
 
  * [`BlobEvent`][blob-event], because [`Blob`][blob]'s content can't be fetched
    from JavaScript.
- * [`SensorReadingEvent`][sensor-reading-event], as it's API is exerimental
-   andinvolves too many interfaces (this is a candidate for separate module).
+ * [`SensorReadingEvent`][sensor-reading-event], as it's involves too many
+   interfaces (candidate for separate module).
  * Non-standard vendor-specific events and properties. These should be
    implemented in separate module (e.g. `wson-mozilla-controller`).
    This module exports many JavaScript classes which simplifies this task
