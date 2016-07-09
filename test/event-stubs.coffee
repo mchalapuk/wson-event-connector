@@ -1,61 +1,28 @@
 'use strict'
 
+extend = (EventClass, propertyNames...) ->
+  class ExtendedEvent extends EventClass
+    constructor: (eventType, properties)->
+      @[key] = properties[key] for key in propertyNames
+      super eventType, properties
+
 module.exports = (window) ->
-
-  class AnimationEvent extends window.Event
-    constructor: (eventType, properties)->
-      @animationName = properties.animationName
-      @elapsedTime = properties.elapsedTime
-      @pseudoElement = properties.pseudoElement
-      super eventType, properties
-
-  class BeforeUnloadEvent extends window.Event
-    constructor: (eventType, properties)->
-      @returnValue = null
-      super eventType, properties
+  AnimationEvent = extend window.Event, 'animationName', 'elapsedTime', 'pseudoElement'
+  BeforeUnloadEvent = extend window.Event, 'returnValue'
 
   class TransferData
     constructor: (data)-> @data = data
     getData: -> @data
-
   class ClipboardEvent extends window.Event
     constructor: (eventType, properties)->
       @clipboardData = new TransferData properties.data
       super eventType, properties
 
-  class CompositionEvent extends window.UIEvent
-    constructor: (eventType, properties)->
-      @data = properties.data
-      @locale = properties.locale
-      super eventType, properties
-
-  class CloseEvent extends window.Event
-    constructor: (eventType, properties)->
-      @code = properties.code
-      @wasClean = properties.wasClean
-      @reason = properties.reason
-      super eventType, properties
-
-  class InputEvent extends window.UIEvent
-    constructor: (eventType, properties)->
-      @data = properties.data
-      @isComposing = properties.isComposing
-      super eventType, properties
-
-  class FontFaceEvent extends window.Event
-    constructor: (eventType, properties)->
-      @[key] = properties[key] for key in [
-        'family'
-        'src'
-        'usedSrc'
-        'style'
-        'weight'
-        'stretch'
-        'unicodeRange'
-        'variant'
-        'featureSetting'
-      ]
-      super eventType, properties
+  CompositionEvent = extend window.UIEvent, 'data', 'locale'
+  CloseEvent = extend window.Event, 'code', 'wasClean', 'reason'
+  InputEvent = extend window.UIEvent, 'data', 'isComposing'
+  FontFaceEvent = extend window.Event, 'family', 'src', 'usedSrc',
+        'style', 'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'
 
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
