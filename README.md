@@ -142,9 +142,15 @@ Following properties are by default not serialized:
 
 This document contains API's exported by this module. Please refer to [wson's documentation][wson] for more.
 
-##### exports `exports(window)`
+### All Connectors
 
-Creates WSON connectors of all events implemented by this module.
+```js
+exports = function(window) { ... }
+```
+
+Creates WSON connectors of all events implemented by this module. Returns a map
+from event class name to instance of connector able to serialize events of this
+class name found in passed **window** namespace.
 
 ```js
 var WSON = require('wson');
@@ -153,9 +159,11 @@ var connectors = require('wson-event-connector');
 var wson = new WSON({ connectors: connectors(window) };
 ```
 
----
+### Event Connector
 
-##### Event `exports.Event(EventClass, additionalFields)`
+```js
+exports.Event = function(EventClass, additionalFields) { ... }
+```
 
 Constructs a connector which is able to serialize event instances of passed
 **EventClass**. Passed class should be derived from `window.Event`. Fields
@@ -181,9 +189,11 @@ var event = wson.parse('[:Event|load|#f|#t|[:HTMLBodyElement|/html`a1`e/body`a1`
 event.parsedTarget.dispatchEvent(event);
 ```
 
----
+### Property Based Connector
 
-##### PropertyBasedConnector `exports.PropertyBasedConnector(Class, serializedFields)`
+```js
+exports.PropertyBasedConnector = function(Class, serializedFields) { ... }
+```
 
 Constructs a connector which is able to serialize instances of passed **Class**.
 There are no requirements regarding serialized class, apart from that is must
