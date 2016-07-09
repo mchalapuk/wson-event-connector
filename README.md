@@ -141,45 +141,50 @@ Following properties are by default not serialized:
 
 ## API
 
-Following documentation contains API's exported by this module.
-Please refer to [wson's documentation][wson] for information about wson API.
+This document contains API's exported by this module. Please refer to [wson's documentation][wson] for more.
 
-#### exports `exports(window)`
+##### exports `exports(window)`
 
 Creates WSON connectors of all events implemented by this module.
 
 ```js
 var WSON = require('wson');
-var eventConnectors = require('wson-event-connector');
+var connectors = require('wson-event-connector');
 
-var wson = new WSON({ connectors: eventConnectors(window) };
+var wson = new WSON({ connectors: connectors(window) };
 ```
 
-#### Event `exports.Event(EventClass, additionalFields)`
+---
+
+##### Event `exports.Event(EventClass, additionalFields)`
 
 Constructs a connector which is able to serialize event instances of passed
-**Class**. Passed class should be derived from `window.Event`. Fields are being
-serialized in following order: ***bubbles***, ***cancelable***,
-**additionalFields**, ***target***.
+**EventClass**. Passed class should be derived from `window.Event`. Fields
+are being serialized in following order: `Event.bubbles`, `Event.cancelable`,
+**additionalFields**, `Event.target`.
 
 `Event.target` property is not settable from JavaScript. A web browser sets this
 property to the instance on which `EventTarget.dispatch(event)` was called.
-Value of `Event.target` in deserialized event is `null`. Target is deserialized
-into non-standard **`Event.parsedTarget`** property.
+In events returned from `wson.parse(string)`, value of `Event.target` is `null`.
+Target is deserialized into non-standard **`Event.parsedTarget`** property.
 
 ```js
 var WSON = require('wson');
-var EventConnector = require('wson-event-connector').EventConnector;
+var eventConnectors = require('wson-event-connector');
+var domConnectors = require('wson-dom-connector');
 
 var wson = new WSON({ connectors: {
-  'Event': new Event(window.Event)
+  'Event': eventConnectors.Event(window.Event),
+  'HTMLBodyElement': domConnectors(window).HTMLBodyElement,
   }});
 
 var event = wson.parse('[:Event|load|#f|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]');
 event.parsedTarget.dispatchEvent(event);
 ```
 
-#### PropertyBasedConnector `exports.PropertyBasedConnector(Class, serializedFields)`
+---
+
+##### PropertyBasedConnector `exports.PropertyBasedConnector(Class, serializedFields)`
 
 Constructs a connector which is able to serialize instances of passed **Class**.
 There are no requirements regarding serialized class, apart from that is must
