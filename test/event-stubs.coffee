@@ -20,13 +20,14 @@ module.exports = (window) ->
       @clipboardData = new TransferData properties.data
       super eventType, properties
 
-  CompositionEvent = extend window.UIEvent, data: null, locale: null
   CloseEvent = extend window.Event, code: 0, wasClean: false, reason: null
-  InputEvent = extend window.UIEvent, data: null, isComposing: false
   FontFaceEvent = extend window.Event, {
     family: null, src: null, usedSrc: null, style: null,
     weight: null, stretch: null, unicodeRange: null, variant: null, featureSetting: null
   }
+
+  CompositionEvent = extend window.UIEvent, data: null, locale: null
+  InputEvent = extend window.UIEvent, data: null, isComposing: false
 
   class ModifierEvent extends (
     extend window.UIEvent, {
@@ -45,6 +46,9 @@ module.exports = (window) ->
   MouseEvent = extend ModifierEvent, {
     screenX: 0, screenY: 0, clientX: 0, clientY: 0, button: 0, buttons: 0, relatedTarget: null
   }
+  WheelEvent = extend MouseEvent, {
+    deltaX: 0.0, deltaY: 0.0, deltaZ: 0.0, deltaMode: 0
+  }
 
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
@@ -54,6 +58,7 @@ module.exports = (window) ->
   window.FontFaceEvent = FontFaceEvent if !window.FontFaceEvent?
   window.KeyboardEvent = KeyboardEvent #if !window.KeyboardEvent?
   window.MouseEvent = MouseEvent #if !window.MouseEvent?
+  window.WheelEvent = WheelEvent #if !window.WheelEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
 
   window

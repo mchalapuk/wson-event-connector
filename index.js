@@ -16,9 +16,10 @@ var constructors = {
   'InputEvent': extend(UIEventConnector).withProperties('data', 'isComposing'),
   'KeyboardEvent': extend(ModifierEventConnector)
     .withProperties('key', 'code', 'location', 'repeat', 'isComposing'),
-  'MouseEvent': extend(ModifierEventConnector) .withProperties('screenX', 'screenY',
-      'clientX', 'clientY', 'button', 'buttons', 'relatedTarget'),
+  'MouseEvent': MouseEventConnector,
   'UIEvent': UIEventConnector,
+  'WheelEvent': extend(MouseEventConnector)
+      .withProperties('deltaX', 'deltaY', 'deltaZ', 'deltaMode'),
 };
 
 module.exports = function getAllConnectors(namespace) {
@@ -44,6 +45,13 @@ function EventConnector(Event, additionalKeys) {
 
 function UIEventConnector(Event, additionalKeys) {
   return new EventConnector(Event, [ 'detail' ].concat(additionalKeys || []).concat([ 'view' ]));
+}
+
+function MouseEventConnector(Event, additionalKeys) {
+  var keys = ['screenX', 'screenY', 'clientX', 'clientY', 'button', 'buttons']
+    .concat(additionalKeys || [])
+    .concat([ 'relatedTarget' ]);
+  return new ModifierEventConnector(Event, keys);
 }
 
 // All modifiers are being reduced to a mask during stringification.

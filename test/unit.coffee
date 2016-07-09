@@ -112,6 +112,19 @@ testParams = [
     { bubbles: true, cancelable: true, detail: 10 }
     [ 'swipe', true, true, 10, null, null ]
   ]
+  [
+    'WheelEvent'
+    'wheel'
+    {
+      detail: 0, ctrlKey: true, shiftKey: true, altKey: true, metaKey: true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
+      modifierSymbol: true, modifierSymbolLock: true,
+      screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
+      deltaX: 123, deltaY: 0, deltaZ: 0, deltaMode: 1,
+    }
+    [ 'wheel', false, false, 0, (16383), 100, 200, 300, 400, 1, 3, 123, 0, 0, 1, null, null, null ]
+  ]
 ]
 
 window = null

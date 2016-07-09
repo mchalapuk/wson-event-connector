@@ -106,6 +106,19 @@ testParams = [
     { bubbles: true, cancelable: true, detail: 1 }
     '[:UIEvent|swipe|#t|#t|#1|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
+  [
+    'WheelEvent'
+    'wheel'
+    {
+      detail: 0, ctrlKey: false, shiftKey: true, altKey: true, metaKey: true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
+      modifierSymbol: true, modifierSymbolLock: true,
+      screenX: 1000, screenY: 2000, clientX: 333, clientY: 444, button: 1, buttons: 3,
+      deltaX: 0, deltaY: -115, deltaZ: 0, deltaMode: 0,
+    }
+    '[:WheelEvent|wheel|#f|#f|#0|#16382|#1000|#2000|#333|#444|#1|#3|#0|#-115|#0|#0|[:Document]|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
 ]
 
 

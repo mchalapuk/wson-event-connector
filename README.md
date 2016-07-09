@@ -107,13 +107,14 @@ In order to serialize DOM nodes assigned to event properties (`Event.target`,
 
 Following events types are currently supported:
 
- * [`Event`](https://dom.spec.whatwg.org/#interface-event)
+* [`Event`](https://dom.spec.whatwg.org/#interface-event)
   * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent)
     * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent)
     * [`FocusEvent`](https://w3c.github.io/uievents/#interface-focusevent)
     * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
     * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent)
     * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)
+      * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent)
   * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
   * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
   * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
