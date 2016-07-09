@@ -10,6 +10,7 @@ var constructors = {
   'CloseEvent': extend(EventConnector).withProperties('code', 'reason', 'wasClean'),
   'CompositionEvent': extend(EventConnector).withProperties('data', 'locale', 'view'),
   'CustomEvent': extend(EventConnector).withProperties('detail'),
+  'FocusEvent': extend(UIEventConnector).withProperties('relatedTarget'),
   'FontFaceEvent': extend(EventConnector).withProperties('family', 'src', 'usedSrc', 'style',
       'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'),
   'InputEvent': extend(UIEventConnector).withProperties('data', 'isComposing'),

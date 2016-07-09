@@ -55,6 +55,12 @@ testParams = [
     [ 'chat', false, false, { contact: '@Matilda' }, null ]
   ]
   [
+    'FocusEvent'
+    'focus'
+    { bubbles: true, cancelable: true, detail: 0 }
+    [ 'focus', true, true, 0, null, null, null ]
+  ]
+  [
     'FontFaceEvent'
     'load'
     {

@@ -110,6 +110,7 @@ Following events types are currently supported:
  * [`Event`](https://dom.spec.whatwg.org/#interface-event)
   * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent)
     * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent)
+    * [`FocusEvent`](https://w3c.github.io/uievents/#interface-focusevent)
     * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
     * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent)
     * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)

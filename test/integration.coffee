@@ -54,6 +54,12 @@ testParams = [
     '[:CustomEvent|chat|#t|#t|{contact:@Jerry}|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
+    'FocusEvent'
+    'focus'
+    { bubbles: true, cancelable: true, detail: 0 }
+    '[:FocusEvent|focus|#t|#t|#0|[:Document]|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'FontFaceEvent'
     'load'
     {
@@ -65,6 +71,18 @@ testParams = [
     '[:FontFaceEvent|load|#f|#f|Arial|file`i//Arial.ttf|file`i//Arial.ttf|normal|bold|normal|unset|normal|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]',
   ]
   [
+    'KeyboardEvent'
+    'keyup'
+    {
+      detail: 0, ctrlKey: true, shiftKey: true, altKey: true, metaKey: true,
+      modifierAltGraph: true, modifierCapsLock: true, modifierFn: true, modifierFnLock:true,
+      modifierHyper: true, modifierNumLock: true, modifierScrollLock: true, modifierSuper: true,
+      modifierSymbol: true, modifierSymbolLock: true,
+      key: 'k', code: '75', location: 0, repeat: true, isComposing: false,
+    }
+    '[:KeyboardEvent|keyup|#f|#f|#0|#16383|k|75|#0|#t|#f|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+  ]
+  [
     'MouseEvent'
     'click'
     {
@@ -74,7 +92,7 @@ testParams = [
       modifierSymbol: true, modifierSymbolLock: true,
       screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
     }
-    '[:MouseEvent|click|#f|#f|#0|#16383|#100|#200|#300|#400|#1|#3|#n|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
+    '[:MouseEvent|click|#f|#f|#0|#16383|#100|#200|#300|#400|#1|#3|[:Document]|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
     'InputEvent'
@@ -112,7 +130,8 @@ describe "WSON with all Event and DOM connectors", ->
         event = null
 
         beforeEach ->
-          properties.view = window # for UI events
+          properties.view = window # UI events
+          properties.relatedTarget = window.document # MouseEvent, FocusEvent
           event = new window[eventName] eventType, properties
 
         it "should serialize #{eventName}", ->
