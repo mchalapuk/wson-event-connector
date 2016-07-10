@@ -2,11 +2,10 @@
 
 extend = (EventClass, defaults) ->
   class ExtendedEvent extends EventClass
-    constructor: (eventType, properties)->
+    constructor: (eventType, init)->
       for key in Object.keys defaults
-        do (key)=>
-          @[key] = if typeof properties[key] is 'undefined' then defaults[key] else properties[key]
-      super eventType, properties
+        do (key)=> @[key] = if typeof init[key] is 'undefined' then defaults[key] else init[key]
+      super eventType, init
 
 module.exports = (window) ->
   AnimationEvent = extend window.Event, animationName: null, elapsedTime: 0, pseudoElement: null
@@ -16,9 +15,9 @@ module.exports = (window) ->
     constructor: (data)-> @data = data
     getData: -> @data
   class ClipboardEvent extends window.Event
-    constructor: (eventType, properties)->
-      @clipboardData = new TransferData properties.data
-      super eventType, properties
+    constructor: (eventType, init)->
+      @clipboardData = new TransferData init.data
+      super eventType, init
 
   CloseEvent = extend window.Event, code: 0, wasClean: false, reason: null
   FontFaceEvent = extend window.Event, {
@@ -37,7 +36,7 @@ module.exports = (window) ->
       modifierSymbol: false, modifierSymbolLock: false
     }
   )
-    constructor: (eventType, properties)-> super eventType, properties
+    constructor: (eventType, init)-> super eventType, init
     getModifierState: (key)-> @["modifier#{key}"]
 
   KeyboardEvent = extend ModifierEvent, {

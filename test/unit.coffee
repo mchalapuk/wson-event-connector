@@ -8,6 +8,52 @@ declareMissingEvents = require './event-stubs.coffee'
 delete require.cache[ require.resolve '../' ]
 connectors = require '..'
 
+# It started very innocent but grew to be quite a monster...
+# This file contains unit tests of all classes implemented by this module.
+
+window = null
+before -> window = declareMissingEvents jsdom.jsdom().defaultView
+after -> window.close()
+
+# A map from name to check functions (defined at the bottom of this file).
+check = {}
+
+
+# UNIT TEST TEMPLATE
+
+
+describeEventUnitTests = (eventName, eventType, getDynamicParams)->
+  init = null
+  expectedSplit = null
+  checks = null
+
+  testedConnector = null
+  event = null
+
+  beforeEach ->
+    [ init, expectedSplit, checks ] = getDynamicParams()
+    testedConnector = connectors[eventName] window[eventName]
+    event = new window[eventName] eventType, init
+
+  describe ".by", ->
+    it "should be #{eventName}\'s constructor", ->
+      testedConnector.by.should.be.exactly window[eventName]
+
+  describe ".split", ->
+    it "should return proper split", ->
+      testedConnector.split(event).should.be.eql expectedSplit
+
+  describe ".create", ->
+    it "should return instance of #{eventName}", ->
+      created = testedConnector.create expectedSplit
+      created.type.should.equal eventType
+      created.constructor.should.be.exactly window[eventName]
+      check[name] init, created for name in checks
+
+
+# EVENT CONNECTOR UNIT TESTS
+
+
 testParams = [
   [
     'Event'
@@ -159,63 +205,64 @@ testParams = [
   ]
 ]
 
-window = null
-before -> window = declareMissingEvents jsdom.jsdom().defaultView
-after -> window.close()
-
-check = {}
-
 for params in testParams
   do (params)->
-    [eventName, eventType, properties, expectedSplit, checkNames] = params
-
+    [eventName, eventType, init, expectedSplit, checks] = params
     describe "connector.#{eventName}", ->
-      testedConnector = null
-      event = null
+      describeEventUnitTests eventName, eventType, -> [ init, expectedSplit, checks ]
 
-      beforeEach ->
-        testedConnector = connectors[eventName] window[eventName]
-        event = new window[eventName] eventType, properties
 
-      describe ".by", ->
-        it "should be #{eventName}\'s constructor", ->
-          testedConnector.by.should.be.exactly window[eventName]
+# CHECK FUNCTIONS
 
-      describe ".split", ->
-        it "should return #{expectedSplit}", ->
-          testedConnector.split(event).should.be.eql expectedSplit
-
-      describe ".create", ->
-        it "should return instance of #{eventName}", ->
-          created = testedConnector.create expectedSplit
-          created.type.should.equal eventType
-          created.constructor.should.equal window[eventName]
-          check[name] properties, created for name in checkNames
 
 before ->
-  check.properties = (actual, created)->
-    for key in Object.keys actual
-      (key)->
-        expectedValue = actual[key]
-        actualValue = created[key]
-        nullExpectedMessage = "testing against null input in actual.#{key}"
-        wrongValueMessage = "event.#{key} should be #{expectedValue}; got #{actualValue}"
-        (expectedValue is null).should.be.false mullExpectedMessage
-        (actualValue is expectedValue).should.be.false wrongValueMessage
+  check.properties = (expected, actual, messagePrefix = "")->
+    for key in Object.keys expected
+      do (key)->
+        expectedValue = expected[key]
+        actualValue = actual[key]
+        nullMessage = "#{messagePrefix} testing against null input in property: #{key}"
+        valueMessage = "#{messagePrefix}.#{key} should be #{expectedValue}; got #{actualValue}"
+        (expectedValue is null).should.be.false nullMessage
+        if typeof actualValue is 'object'
+          actualValue.should.be.eql expectedValue
+        else
+          (actualValue is expectedValue).should.be.true valueMessage
 
-  check.modifiers = (actual, created)->
-    modifiers = Object.keys(actual).filter (key)->key.startsWith 'modifier'
+  check.modifiers = (expected, actual)->
+    modifiers = Object.keys(expected).filter (key)->key.startsWith 'modifier'
     for key in modifiers
       do (key)->
-        expectedValue = actual[key]
-        actualValue = created.getModifierState key.substring 'modifier'.length
-        nullExpectedMessage = "testing against null input in actual.#{key}"
-        wrongValueMessage = "#{actual.constructor}.getModifierState('#{key}')"+
+        expectedValue = expected[key]
+        actualValue = actual.getModifierState key.substring 'modifier'.length
+        nullMessage = "testing against null input in modifier: #{key}"
+        valueMessage = "#{expected.constructor}.getModifierState('#{key}')"+
           " should be #{expectedValue}; got #{actualValue}"
-        (expectedValue is null).should.be.false nullExpectedMessage
-        (expectedValue is actualValue).should.be.true wrongValueMessage
-        delete actual[key]
+        (expectedValue is null).should.be.false nullMessage
+        (expectedValue is actualValue).should.be.true valueMessage
+        delete expected[key]
 
-  check.clipboardData = (expected, created)->
-    created.clipboardData.getData(expected.dataFormat).should.equal expected.data
+  check.clipboardData = (expected, actual)->
+    actual.clipboardData.getData(expected.dataFormat).should.equal expected.data
+
+  check.touchLists = (expected, actual)->
+    for key in [ 'touches', 'targetTouches', 'changedTouches' ]
+      do (key)->
+        expectedList = expected[key]
+        actualList = actual[key]
+        lengthMessage = "length of #{key} should be #{expectedList.length}; got #{actualList.length}"
+        (expectedList.length is actualList.length).should.be.true lengthMessage
+        check.touchList expectedList, actualList, key
+        delete expected[key]
+
+  check.touchList = (expected, actual, messagePrefix = "")->
+    expected.forEach (expectedValue, index)->
+      actualValue = actual.item index
+
+      expectedInit = {}
+      expectedInit[key] = expectedValue[key] for key in [
+        'identifier', 'target', 'clientX', 'clientY', 'screenX', 'screenY',
+        'pageX', 'pageY', 'radiusX', 'radiusY', 'rotationAngle', 'force',
+      ]
+      check.properties expectedInit, actualValue, "#{messagePrefix}[#{index}]"
 

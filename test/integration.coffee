@@ -148,14 +148,14 @@ describe "WSON with all Event and DOM connectors", ->
   describe ".stringify", ->
     for params in testParams
       do (params) ->
-        [eventName, eventType, properties, expectedString] = params
+        [eventName, eventType, init, expectedString] = params
 
         event = null
 
         beforeEach ->
-          properties.view = window # UI events
-          properties.relatedTarget = window.document # MouseEvent, FocusEvent
-          event = new window[eventName] eventType, properties
+          init.view = window # UI events
+          init.relatedTarget = window.document # MouseEvent, FocusEvent
+          event = new window[eventName] eventType, init
 
         it "should serialize #{eventName}", ->
           serialized = null
@@ -166,7 +166,7 @@ describe "WSON with all Event and DOM connectors", ->
   describe '.parse', ->
     for params in testParams
       do (params) ->
-        [eventName, eventType, properties, expectedString] = params
+        [eventName, eventType, init, expectedString] = params
 
         it "should parse #{expectedString}", ->
           deserialized = testedWSON.parse expectedString
