@@ -107,21 +107,21 @@ In order to serialize DOM nodes assigned to event properties (`Event.target`,
 
 Following events types are currently supported:
 
-* [`Event`](https://dom.spec.whatwg.org/#interface-event),
-  * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent),
-    * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent),
-    * [`FocusEvent`](https://w3c.github.io/uievents/#interface-focusevent),
-    * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent),
-    * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent),
-    * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent),
-      * [`PointerEvent`](https://w3c.github.io/pointerevents/#pointerevent-interface),
-      * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent),
-    * [`TouchEvent`](https://w3c.github.io/touch-events/#idl-def-Touch),
-  * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent),
-  * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent),
-  * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces),
-  * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent),
-  * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events).
+* [`Event`](https://dom.spec.whatwg.org/#interface-event)
+  * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent)
+    * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent)
+    * [`FocusEvent`](https://w3c.github.io/uievents/#interface-focusevent)
+    * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
+    * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent)
+    * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)
+      * [`PointerEvent`](https://w3c.github.io/pointerevents/#pointerevent-interface)
+      * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent)
+    * [`TouchEvent`](https://w3c.github.io/touch-events/#idl-def-Touch)
+  * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
+  * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
+  * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
+  * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent)
+  * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events)
 
 ## (Not Yet) Supported Events
 
@@ -130,10 +130,10 @@ Near future should bring support for following classes:
  * [`DragEvent`](https://html.spec.whatwg.org/multipage/interaction.html#dragevent)
  * [`DeviceOrientationEvent`](https://w3c.github.io/deviceorientation/spec-source-orientation.html#deviceorientation)
  * [`DeviceMotionEvent`](http://w3c.github.io/deviceorientation/spec-source-orientation.html#devicemotion)
- * [`ErrorEvent`](https://html.spec.whatwg.org/multipage/webappapis.html#the-errorevent-interface),
- * [`GamepadEvent`](https://w3c.github.io/gamepad/#gamepadevent-interface),
- * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent),
- * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface).
+ * [`ErrorEvent`](https://html.spec.whatwg.org/multipage/webappapis.html#the-errorevent-interface)
+ * [`GamepadEvent`](https://w3c.github.io/gamepad/#gamepadevent-interface)
+ * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent)
+ * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)
 
 ## Unsupported Events
 
@@ -155,8 +155,8 @@ Serialization of following event classes will not be implemented in this module:
    implemented in separate module (e.g.&nbsp;`wson-mozilla-controller`).
    Classes exported from this module can simplify this task (see [API docs][api]).
 
-[blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
-[blob]: https://developer.mozilla.org/en-US/docs/Web/API/Blob
+[blob-event]: https://w3c.github.io/mediacapture-record/MediaRecorder.html#blob-event
+[blob]: https://w3c.github.io/FileAPI/#blob
 [message]: https://www.w3.org/TR/2012/CR-webmessaging-20120501/#event-definitions
 [close]: https://html.spec.whatwg.org/multipage/comms.html#closeevent
 [rtc-peer-conn-ice]: https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent
