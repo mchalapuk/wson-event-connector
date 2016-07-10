@@ -14,6 +14,7 @@ testParams = [
     'generic'
     { bubbles: false, cancelable: false }
     [ 'generic', false, false, null ]
+    [ 'properties' ]
   ]
   [
     'AnimationEvent'
@@ -23,42 +24,49 @@ testParams = [
       animationName: 'testAnim', elapsedTime: 100, pseudoElement: 'pseudo'
     }
     [ 'test', false, true, 'testAnim', 100, 'pseudo', null ]
+    [ 'properties' ]
   ]
   [
     'BeforeUnloadEvent'
     'beforeunload'
     { bubbles: false, cancelable: true  }
     [ 'beforeunload', false, true, null ]
+    [ 'properties' ]
   ]
   [
     'ClipboardEvent'
     'copy'
     { bubbles: true, cancelable: true, dataFormat: 'text/plain', data: 'https://github.com/' }
     [ 'copy', true, true, 'text/plain', 'https://github.com/', null ]
+    [ 'clipboardData' ]
   ]
   [
     'CloseEvent'
     'close'
     { bubbles: false, cancelable: false, code: 1000, reason: '', wasClean: true }
     [ 'close', false, false, 1000, '', true, null ]
+    [ 'properties' ]
   ]
   [
     'CompositionEvent'
     'start'
     { bubbles: true, cancelable: true, data: 'deleted text', locale: 'C' }
     [ 'start', true, true, 'deleted text', 'C', null, null ]
+    [ 'properties' ]
   ]
   [
     'CustomEvent'
     'chat'
     { bubbles: false, cancelable: false, detail: { contact: '@Matilda' } }
     [ 'chat', false, false, { contact: '@Matilda' }, null ]
+    [ 'properties' ]
   ]
   [
     'FocusEvent'
     'focus'
     { bubbles: true, cancelable: true, detail: 0 }
     [ 'focus', true, true, 0, null, null, null ]
+    [ 'properties' ]
   ]
   [
     'FontFaceEvent'
@@ -75,12 +83,14 @@ testParams = [
       'bold', 'normal', 'unset', 'normal',
       'mysetting on', null
     ]
+    [ 'properties' ]
   ]
   [
     'InputEvent'
     'beforeinput'
     { bubbles: true, cancelable: false, detail: 0, data: '', isComposing: false }
     [ 'beforeinput', true, false, 0, '', false, null, null ]
+    [ 'properties' ]
   ]
   [
     'KeyboardEvent'
@@ -93,6 +103,7 @@ testParams = [
       key: 'k', code: '75', location: 0, repeat: true, isComposing: false,
     }
     [ 'keyup', false, false, 0, 16383, 'k', '75', 0, true, false, null, null ]
+    [ 'modifiers', 'properties' ]
   ]
   [
     'MouseEvent'
@@ -105,6 +116,7 @@ testParams = [
       screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
     }
     [ 'click', false, false, 0, 16383, 100, 200, 300, 400, 1, 3, null, null, null ]
+    [ 'modifiers', 'properties' ]
   ]
   [
     'PointerEvent'
@@ -122,12 +134,14 @@ testParams = [
       'pointerup', false, false, 0, 4, 100, 200, 30, 40, 0, 0,
       4, 2, 2, 1, 1, 20, -15,4, 'pen', true, null, null, null
     ]
+    [ 'modifiers', 'properties' ]
   ]
   [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 10 }
     [ 'swipe', true, true, 10, null, null ]
+    [ 'properties' ]
   ]
   [
     'WheelEvent'
@@ -140,7 +154,8 @@ testParams = [
       screenX: 100, screenY: 200, clientX: 300, clientY: 400, button: 1, buttons: 3,
       deltaX: 123, deltaY: 0, deltaZ: 0, deltaMode: 1,
     }
-    [ 'wheel', false, false, 0, (16383), 100, 200, 300, 400, 1, 3, 123, 0, 0, 1, null, null, null ]
+    [ 'wheel', false, false, 0, (16383), 100, 200, 300, 400, 1, 3, 123, 0, 0, 1, null, null, null ],
+    [ 'modifiers', 'properties' ]
   ]
 ]
 
@@ -148,9 +163,11 @@ window = null
 before -> window = declareMissingEvents jsdom.jsdom().defaultView
 after -> window.close()
 
+check = {}
+
 for params in testParams
   do (params)->
-    [eventName, eventType, properties, expectedSplit] = params
+    [eventName, eventType, properties, expectedSplit, checkNames] = params
 
     describe "connector.#{eventName}", ->
       testedConnector = null
@@ -172,29 +189,33 @@ for params in testParams
         it "should return instance of #{eventName}", ->
           created = testedConnector.create expectedSplit
           created.type.should.equal eventType
-          if created instanceof window.MouseEvent
-            checkModifiers properties, created
-          if created instanceof window.ClipboardEvent
-            created.clipboardData.getData(properties.dataFormat).should.equal properties.data
-          else
-            checkProperties properties, created
           created.constructor.should.equal window[eventName]
+          check[name] properties, created for name in checkNames
 
-checkProperties = (properties, created)->
-  for key in Object.keys properties
-    (key)->
-      expected = properties[key]
-      actual = created[key]
-      (expected is null).should.be.false "testing against null input in properties.#{key}"
-      (actual is expected).should.be.false "event.#{key} should be #{expected}; got #{actual}"
+before ->
+  check.properties = (actual, created)->
+    for key in Object.keys actual
+      (key)->
+        expectedValue = actual[key]
+        actualValue = created[key]
+        nullExpectedMessage = "testing against null input in actual.#{key}"
+        wrongValueMessage = "event.#{key} should be #{expectedValue}; got #{actualValue}"
+        (expectedValue is null).should.be.false mullExpectedMessage
+        (actualValue is expectedValue).should.be.false wrongValueMessage
 
-checkModifiers = (properties, created)->
-  modifiers = Object.keys(properties).filter (key)->key.startsWith 'modifier'
-  for key in modifiers
-    do (key)->
-      expected = properties[key]
-      actual = created.getModifierState key.substring 'modifier'.length
-      (expected is null).should.be.false "testing against null input in properties.#{key}"
-      (expected is actual).should.be.true "wrong value of modifier #{key}: #{actual}"
-      delete properties[key]
+  check.modifiers = (actual, created)->
+    modifiers = Object.keys(actual).filter (key)->key.startsWith 'modifier'
+    for key in modifiers
+      do (key)->
+        expectedValue = actual[key]
+        actualValue = created.getModifierState key.substring 'modifier'.length
+        nullExpectedMessage = "testing against null input in actual.#{key}"
+        wrongValueMessage = "#{actual.constructor}.getModifierState('#{key}')"+
+          " should be #{expectedValue}; got #{actualValue}"
+        (expectedValue is null).should.be.false nullExpectedMessage
+        (expectedValue is actualValue).should.be.true wrongValueMessage
+        delete actual[key]
+
+  check.clipboardData = (expected, created)->
+    created.clipboardData.getData(expected.dataFormat).should.equal expected.data
 
