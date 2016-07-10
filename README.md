@@ -139,9 +139,15 @@ Near future should bring support for following classes:
  * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)
  * [`StorageEvent`](https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface)
 
-In case when serialization of non-standard vendor-specific events is needed,
-separate module should be created (e.g.&nbsp;`wson-mozilla-connector`).
-Classes exported from this module can simplify this task (see [API docs][api]).
+Feel free to message me if you desperately need one of above.
+
+**Pull requests are also very welcome!**
+
+> **NOTE**:
+>
+> Please do not submit pull requests implementing non-standard vendor-specific events.
+> For these, a separate module should be created (e.g.&nbsp;`wson-mozilla-connector`),
+> with this module as dependency (see [API Reference](#api-reference)).
 
 ## Unsupported Events
 
@@ -210,7 +216,7 @@ Following properties are by default not serialized:
 [is-trusted]: https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
 [source-capabilities]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/sourceCapabilities
 
-## API
+## API Reference
 
 This document contains API's exported by this module. Please refer to [wson's documentation][wson] for more.
 
