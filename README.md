@@ -133,6 +133,7 @@ Near future should bring support for following classes:
  * [`ErrorEvent`](https://html.spec.whatwg.org/multipage/webappapis.html#the-errorevent-interface)
  * [`GamepadEvent`](https://w3c.github.io/gamepad/#gamepadevent-interface)
  * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent)
+ * [`IDBVersionChangeEvent`](https://www.w3.org/TR/IndexedDB/#idl-def-IDBVersionChangeEvent)
  * [`PageTransitionEvent`](https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface)
  * [`PopStateEvent`](https://html.spec.whatwg.org/multipage/browsers.html#popstateevent)
  * [`ProgressEvent`](https://xhr.spec.whatwg.org/#interface-progressevent)
