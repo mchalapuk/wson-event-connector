@@ -144,17 +144,19 @@ Near future should bring support for following classes:
 Serialization of following event classes will not be implemented in this module:
 
  * [`BlobEvent`][blob-event], because [`Blob`][blob]'s content can't be fetched
-   from JavaScript.
+   from JavaScript,
  * Websockets-related events ([`MessageEvent`][message], [`CloseEvent`][close]).
  * RTC-related events ([`RTCPeerConnectionIceEvent`][rtc-peer-conn-ice],
    [`RTCPeerConnectionIceErrorEvent`][rtc-peer-conn-ice-error],
    [`RTCTrackEvent`][rtc-track], [`RTCDataChannelEvent`][rtc-data-channel],
-   [`RTCDTMFToneChangeEvent`][rtc-tone-change]).
+   [`RTCDTMFToneChangeEvent`][rtc-tone-change]),
  * Service-workers-related event ([`FetchEvent`][fetch],
    [`ExtendableEvent`][extendable], [`ExtendableMessageEvent`][extendable-message]).
  * Web-Audio-related events ([`AudioProcessEvent`][audio-process],
    [`AudioWorkerNodeCreationEvent`][audio-worker-creation],
-   [`OfflineAudioCompletionEvent`][offline-audio-completion]).
+   [`OfflineAudioCompletionEvent`][offline-audio-completion]),
+ * <abbr title="Scalable Vector Graphics">SVG</abbr>-related events ([`TimeEvent`][time],
+   [`SVGZoomEvent`][svg-zoom]),
  * Non-standard vendor-specific events and properties. These should be
    implemented in separate module (e.g.&nbsp;`wson-mozilla-controller`).
    Classes exported from this module can simplify this task (see [API docs][api]).
@@ -174,6 +176,8 @@ Serialization of following event classes will not be implemented in this module:
 [audio-process]: https://webaudio.github.io/web-audio-api/#the-audioprocessevent-interface
 [offline-audio-completion]: https://webaudio.github.io/web-audio-api/#OfflineAudioCompletionEvent
 [audio-worker-creation]: https://webaudio.github.io/web-audio-api/#the-audioworkernodecreationevent-interface
+[time]: https://www.w3.org/TR/2001/REC-smil-animation-20010904/#Events-TimeEvent
+[svg-zoom]: https://www.w3.org/TR/SVG/script.html#InterfaceSVGZoomEvent
 [api]: #api
 
 ## Why are some properties not serialized?
