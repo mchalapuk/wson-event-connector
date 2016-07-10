@@ -135,7 +135,9 @@ Near future should bring support for following classes:
  * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent)
  * [`PageTransitionEvent`](https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface)
  * [`PopStateEvent`](https://html.spec.whatwg.org/multipage/browsers.html#popstateevent)
+ * [`ProgressEvent`](https://xhr.spec.whatwg.org/#interface-progressevent)
  * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)
+ * [`StorageEvent`](https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface)
 
 ## Unsupported Events
 
