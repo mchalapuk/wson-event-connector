@@ -138,6 +138,7 @@ Near future should bring support for following classes:
  * [`ProgressEvent`](https://xhr.spec.whatwg.org/#interface-progressevent)
  * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)
  * [`StorageEvent`](https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface)
+ * [`TransitionEvent`](https://drafts.csswg.org/css-transitions/#Events-TransitionEvent)
 
 Feel free to message me if you desperately need one of above.
 
