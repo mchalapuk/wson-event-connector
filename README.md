@@ -148,6 +148,9 @@ Serialization of following event classes will not be implemented in this module:
    [`RTCDTMFToneChangeEvent`][rtc-tone-change]).
  * Service-workers-related event ([`FetchEvent`][fetch],
    [`ExtendableEvent`][extendable], [`ExtendableMessageEvent`][extendable-message]).
+ * Web-Audio-related events ([`AudioProcessEvent`][audio-process],
+   [`AudioWorkerNodeCreationEvent`][audio-worker-creation],
+   [`OfflineAudioCompletionEvent`][offline-audio-completion]).
  * Non-standard vendor-specific events and properties. These should be
    implemented in separate module (e.g.&nbsp;`wson-mozilla-controller`).
    Classes exported from this module can simplify this task (see [API docs][api]).
@@ -164,6 +167,9 @@ Serialization of following event classes will not be implemented in this module:
 [fetch]: https://www.w3.org/TR/service-workers/#fetch-event-section
 [extendable]: https://www.w3.org/TR/service-workers/#extendable-event-interface
 [extendable-message]: https://www.w3.org/TR/service-workers/#extendablemessage-event-section
+[audio-process]: https://webaudio.github.io/web-audio-api/#the-audioprocessevent-interface
+[offline-audio-completion]: https://webaudio.github.io/web-audio-api/#OfflineAudioCompletionEvent
+[audio-worker-creation]: https://webaudio.github.io/web-audio-api/#the-audioworkernodecreationevent-interface
 [api]: #api
 
 ## Why are some properties not serialized?
