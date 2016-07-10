@@ -116,6 +116,7 @@ Following events types are currently supported:
     * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)
       * [`PointerEvent`](https://w3c.github.io/pointerevents/#pointerevent-interface)
       * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent)
+    * [`TouchEvent`](https://w3c.github.io/touch-events/#idl-def-Touch)
   * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
   * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
   * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)

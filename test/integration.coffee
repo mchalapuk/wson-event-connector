@@ -131,6 +131,13 @@ testParams = [
   ]
 ]
 
+touchEventName = 'TouchEvent'
+touchEventType = 'touch'
+touchEventExpectedString = '[:TouchEvent|touch|#f|#f|#0|'+
+  '[[:Touch|#1|[:HTMLBodyElement|/html`a1`e/body`a1`e]|#400|#500|#600|#700|#10|#20|#5|#4|#9|#1]]'+
+  '|[]|'+
+  '[[:Touch|#1|[:HTMLBodyElement|/html`a1`e/body`a1`e]|#400|#500|#600|#700|#10|#20|#5|#4|#9|#1]]'+
+  '|#t|#f|#t|#f|[:Window]|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
 
 describe "WSON with all Event and DOM connectors", ->
   window = null
@@ -163,6 +170,25 @@ describe "WSON with all Event and DOM connectors", ->
           body.dispatchEvent event
           serialized.should.equal expectedString
 
+    it "should serialize #{touchEventName}", ->
+      touch = new window.Touch {
+        identifier: 1, target: window.document.body,
+        clientX: 400, clientY: 500, screenX: 600, screenY: 700, pageX: 10, pageY: 20,
+        radiusX: 5, radiusY: 4, rotationAngle: 9, force: 1,
+      }
+      init = {
+        touches: [ touch ], targetTouches: [], changedTouches: [ touch ],
+        altKey: true, metaKey: false, ctrlKey: true, shiftKey: false,
+        view: window
+      }
+
+      event = new window[touchEventName] touchEventType, init
+
+      serialized = null
+      body.addEventListener touchEventType, -> serialized = testedWSON.stringify event
+      body.dispatchEvent event
+      serialized.should.equal touchEventExpectedString
+
   describe '.parse', ->
     for params in testParams
       do (params) ->
@@ -173,4 +199,12 @@ describe "WSON with all Event and DOM connectors", ->
           deserialized.type.should.be.exactly eventType
           deserialized.parsedTarget.should.be.exactly body
           (deserialized.view is window).should.be.true if deserialized instanceof window.UIEvent
+
+    it "should parse #{touchEventExpectedString}", ->
+      deserialized = testedWSON.parse touchEventExpectedString
+      deserialized.type.should.be.exactly touchEventType
+      deserialized.parsedTarget.should.be.exactly body
+      (deserialized.view is window).should.be.true
+      deserialized.touches.item(0).target.should.be.exactly body
+      deserialized.changedTouches.item(0).target.should.be.exactly body
 

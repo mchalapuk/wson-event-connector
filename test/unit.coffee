@@ -51,6 +51,75 @@ describeEventUnitTests = (eventName, eventType, getDynamicParams)->
       check[name] init, created for name in checks
 
 
+# EXCEPTIONAL CASES
+
+
+# connector.TouchEvent must be tested separately
+# because of TouchEvent's complicated initialization.
+describe "connector.TouchEvent", ->
+  eventName = 'TouchEvent'
+  eventType = 'touch'
+  checks = [ 'touchLists', 'properties' ]
+
+  init = null
+  expectedSplit = null
+
+  beforeEach ->
+    touch = new window.Touch {
+      identifier: 1, target: window.document.body,
+      clientX: 400, clientY: 500, screenX: 600, screenY: 700, pageX: 10, pageY: 20,
+      radiusX: 5, radiusY: 4, rotationAngle: 9, force: 1,
+    }
+    init = {
+      touches: [ touch ], targetTouches: [], changedTouches: [ touch ],
+      altKey: true, metaKey: false, ctrlKey: true, shiftKey: false,
+    }
+    splitTouch = [ 1, window.document.body, 400, 500, 600, 700, 10, 20, 5, 4, 9, 1 ]
+    expectedSplit = [
+      eventType, false, false, 0, [ touch ], [], [ touch ], true, false, true, false, null, null
+    ]
+
+  describeEventUnitTests eventName, eventType, -> [ init, expectedSplit, checks ]
+
+
+# Touch must be tested separately is not an event.
+describe "connector.Touch", ->
+  className = 'Touch'
+
+  init = null
+  expectedSplit = null
+
+  testedConnector = null
+  touch = null
+
+  beforeEach ->
+    init = {
+      identifier: 1, target: window.document.body,
+      clientX: 400, clientY: 500, screenX: 600, screenY: 700, pageX: 10, pageY: 20,
+      radiusX: 5, radiusY: 4, rotationAngle: 9, force: 1,
+    }
+    expectedSplit = [
+      1, window.document.body, 400, 500, 600, 700, 10, 20, 5, 4, 9, 1
+    ]
+    touch = new window[className] init
+
+    testedConnector = connectors[className] window[className]
+
+  describe ".by", ->
+    it "should be #{className}\'s constructor", ->
+      testedConnector.by.should.be.exactly window[className]
+
+  describe ".split", ->
+    it "should return proper split", ->
+      testedConnector.split(touch).should.be.eql expectedSplit
+
+  describe ".create", ->
+    it "should return instance of #{className}", ->
+      created = testedConnector.create expectedSplit
+      created.constructor.should.be.exactly window[className]
+      check.properties init, created
+
+
 # EVENT CONNECTOR UNIT TESTS
 
 

@@ -53,6 +53,32 @@ module.exports = (window) ->
     deltaX: 0.0, deltaY: 0.0, deltaZ: 0.0, deltaMode: 0
   }
 
+  class Touch
+    defaults = {
+      clientX: 0, clientY: 0, screenX: 0, screenY: 0, pageX: 0, pageY: 0,
+      radiusX: 0, radiusY: 0, rotationAngle: 0, force: 0,
+    }
+    constructor: (init)->
+      @identifier = init.identifier or throw new Error('identifier field is required')
+      @target = init.target or throw new Error('target is required')
+      Object.keys(defaults).forEach (key)=>
+        @[key] = if typeof init[key] is 'undefined' then defaults[key] else init[key]
+  class TouchList
+    constructor:(touches)->
+      @touches = touches
+      @length = @touches.length
+    item: (index)-> @touches[index]
+
+  class TouchEvent extends (
+    extend window.UIEvent, {
+      altKey: false, metaKey: false, ctrlKey: false, shiftKey: false,
+    }
+  )
+    constructor: (eventType, init)->
+      super eventType, init
+      @[key] = new TouchList(init[key]) for key in [ 'touches', 'targetTouches', 'changedTouches' ]
+
+
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
   window.ClipboardEvent = ClipboardEvent if !window.ClipboardEvent?
@@ -62,6 +88,8 @@ module.exports = (window) ->
   window.KeyboardEvent = KeyboardEvent #if !window.KeyboardEvent?
   window.MouseEvent = MouseEvent #if !window.MouseEvent?
   window.PointerEvent = PointerEvent #if !window.PointerEvent?
+  window.Touch = Touch #if !window.Touch?
+  window.TouchEvent = TouchEvent #if !window.TouchEvent?
   window.WheelEvent = WheelEvent #if !window.WheelEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
 

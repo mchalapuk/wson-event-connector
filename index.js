@@ -19,6 +19,9 @@ var constructors = {
   'MouseEvent': MouseEventConnector,
   'PointerEvent': extend(MouseEventConnector).withProperties('pointerId', 'width', 'height',
       'pressure', 'tangentialPressure', 'tiltX', 'tiltY', 'twist', 'pointerType', 'isPrimary'),
+  'TouchEvent': TouchEventConnector,
+  'Touch': extend(InitBasedConnector).withProperties('identifier', 'target', 'clientX', 'clientY',
+      'screenX', 'screenY', 'pageX', 'pageY', 'radiusX', 'radiusY', 'rotationAngle', 'force'),
   'UIEvent': UIEventConnector,
   'WheelEvent': extend(MouseEventConnector)
     .withProperties('deltaX', 'deltaY', 'deltaZ', 'deltaMode'),
@@ -39,6 +42,31 @@ module.exports.InitBased = InitBasedConnector;
 Object.keys(constructors).forEach(function(name) {
   module.exports[name] = constructors[name];
 });
+
+function TouchEventConnector(TouchEvent, additionalKeys) {
+  var touchListKeys = [ 'touches', 'targetTouches', 'changedTouches' ];
+  var keys = touchListKeys
+    .concat([ 'altKey', 'metaKey', 'ctrlKey', 'shiftKey' ])
+    .concat(additionalKeys || []);
+
+  function touchListToArray(list) {
+    var array = [];
+    for (var i = 0; i < list.length; ++i) {
+      array.push(list.item(i));
+    }
+    return array;
+  }
+
+  var connector = new UIEventConnector(TouchEvent, keys);
+
+  connector.split = pipe(connector.split, function(retVal) {
+    touchListKeys.forEach(function(key) {
+      var index = connector.indexOf(key);
+      retVal[index] = touchListToArray(retVal[index]);
+    });
+  });
+  return connector;
+}
 
 function MouseEventConnector(MouseEvent, additionalKeys) {
   var keys = ['screenX', 'screenY', 'clientX', 'clientY', 'button', 'buttons']
