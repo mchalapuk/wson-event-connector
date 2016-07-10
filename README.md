@@ -107,38 +107,63 @@ In order to serialize DOM nodes assigned to event properties (`Event.target`,
 
 Following events types are currently supported:
 
-* [`Event`](https://dom.spec.whatwg.org/#interface-event)
-  * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent)
-    * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent)
-    * [`FocusEvent`](https://w3c.github.io/uievents/#interface-focusevent)
-    * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent)
-    * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent)
-    * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent)
-      * [`PointerEvent`](https://w3c.github.io/pointerevents/#pointerevent-interface)
-      * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent)
-    * [`TouchEvent`](https://w3c.github.io/touch-events/#idl-def-Touch)
-  * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent)
-  * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent)
-  * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
-  * [`CloseEvent`](https://html.spec.whatwg.org/multipage/comms.html#closeevent)
-  * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent)
-  * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events)
+* [`Event`](https://dom.spec.whatwg.org/#interface-event),
+  * [`UIEvent`](https://w3c.github.io/uievents/#interface-uievent),
+    * [`CompositionEvent`](https://w3c.github.io/uievents/#interface-compositionevent),
+    * [`FocusEvent`](https://w3c.github.io/uievents/#interface-focusevent),
+    * [`InputEvent`](https://w3c.github.io/uievents/#interface-inputevent),
+    * [`KeyboardEvent`](https://w3c.github.io/uievents/#interface-keyboardevent),
+    * [`MouseEvent`](https://w3c.github.io/uievents/#interface-mouseevent),
+      * [`PointerEvent`](https://w3c.github.io/pointerevents/#pointerevent-interface),
+      * [`WheelEvent`](https://w3c.github.io/uievents/#interface-wheelevent),
+    * [`TouchEvent`](https://w3c.github.io/touch-events/#idl-def-Touch),
+  * [`AnimationEvent`](https://drafts.csswg.org/css-animations/#interface-animationevent),
+  * [`BeforeUnloadEvent`](https://dev.w3.org/html5/spec-LC/history.html#beforeunloadevent),
+  * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces),
+  * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent),
+  * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events).
+
+## (Not Yet) Supported Events
+
+Near future should bring support for following classes:
+
+ * [`DragEvent`](https://html.spec.whatwg.org/multipage/interaction.html#dragevent)
+ * [`DeviceOrientationEvent`](https://w3c.github.io/deviceorientation/spec-source-orientation.html#deviceorientation)
+ * [`DeviceMotionEvent`](http://w3c.github.io/deviceorientation/spec-source-orientation.html#devicemotion)
+ * [`ErrorEvent`](https://html.spec.whatwg.org/multipage/webappapis.html#the-errorevent-interface),
+ * [`GamepadEvent`](https://w3c.github.io/gamepad/#gamepadevent-interface),
+ * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent),
+ * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface).
 
 ## Unsupported Events
 
-Serialization of following event classes is not implemented in this module:
+Serialization of following event classes will not be implemented in this module:
 
  * [`BlobEvent`][blob-event], because [`Blob`][blob]'s content can't be fetched
    from JavaScript.
- * [`SensorReadingEvent`][sensor-reading-event], as it's API involves too many
-   interfaces (candidate for separate module).
+ * Websockets-related events ([`MessageEvent`][message], [`CloseEvent`][close]).
+ * RTC-related events ([`RTCPeerConnectionIceEvent`][rtc-peer-conn-ice],
+   [`RTCPeerConnectionIceErrorEvent`][rtc-peer-conn-ice-error],
+   [`RTCTrackEvent`][rtc-track], [`RTCDataChannelEvent`][rtc-data-channel],
+   [`RTCDTMFToneChangeEvent`][rtc-tone-change]).
+ * Service-workers-related event ([`FetchEvent`][fetch],
+   [`ExtendableEvent`][extendable], [`ExtendableMessageEvent`][extendable-message]).
  * Non-standard vendor-specific events and properties. These should be
    implemented in separate module (e.g.&nbsp;`wson-mozilla-controller`).
    Classes exported from this module can simplify this task (see [API docs][api]).
 
 [blob-event]: https://developer.mozilla.org/en-US/docs/Web/API/BlobEvent
 [blob]: https://developer.mozilla.org/en-US/docs/Web/API/Blob
-[sensor-reading-event]: https://w3c.github.io/sensors/#the-sensor-reading-event-interface
+[message]: https://www.w3.org/TR/2012/CR-webmessaging-20120501/#event-definitions
+[close]: https://html.spec.whatwg.org/multipage/comms.html#closeevent
+[rtc-peer-conn-ice]: https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent
+[rtc-peer-conn-ice-error]: https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent
+[rtc-track]: https://w3c.github.io/webrtc-pc/#rtctrackevent
+[rtc-data-channel]: https://w3c.github.io/webrtc-pc/#rtcdatachannelevent
+[rtc-tone-change]: https://w3c.github.io/webrtc-pc/#rtcdtmftonechangeevent
+[fetch]: https://www.w3.org/TR/service-workers/#fetch-event-section
+[extendable]: https://www.w3.org/TR/service-workers/#extendable-event-interface
+[extendable-message]: https://www.w3.org/TR/service-workers/#extendablemessage-event-section
 [api]: #api
 
 ## Why are some properties not serialized?
