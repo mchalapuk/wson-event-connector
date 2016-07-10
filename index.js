@@ -17,48 +17,38 @@ var constructors = {
   'KeyboardEvent': extend(ModifierEventConnector)
     .withProperties('key', 'code', 'location', 'repeat', 'isComposing'),
   'MouseEvent': MouseEventConnector,
-  'PointerEvent': extend(MouseEventConnector)
-    .withProperties('pointerId', 'width', 'height', 'pressure', 'tangentialPressure',
-        'tiltX', 'tiltY', 'twist', 'pointerType', 'isPrimary'),
+  'PointerEvent': extend(MouseEventConnector).withProperties('pointerId', 'width', 'height',
+      'pressure', 'tangentialPressure', 'tiltX', 'tiltY', 'twist', 'pointerType', 'isPrimary'),
   'UIEvent': UIEventConnector,
   'WheelEvent': extend(MouseEventConnector)
     .withProperties('deltaX', 'deltaY', 'deltaZ', 'deltaMode'),
 };
 
-module.exports = function getAllConnectors(namespace) {
+module.exports = function getAllConnectors(namespace, keys) {
   check(typeof namespace === 'object', 'Passed namespace is not an object.');
 
   var connectors = {};
   Object.keys(constructors)
     .filter(function(name) { return typeof namespace[name] === 'function'; })
-    .forEach(function(name) { connectors[name] = constructors[name](namespace[name]); });
+    .forEach(function(name) { connectors[name] = constructors[name](namespace[name], keys); });
   return connectors;
 }
+
+module.exports.InitBased = InitBasedConnector;
 
 Object.keys(constructors).forEach(function(name) {
   module.exports[name] = constructors[name];
 });
 
-module.exports.PropertyBasedConnector = PropertyBasedConnector;
-
-function EventConnector(Event, additionalKeys) {
-  var keys = [ 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat([ 'target' ]);
-  return new PropertyBasedConnector(Event, keys);
-}
-
-function UIEventConnector(Event, additionalKeys) {
-  return new EventConnector(Event, [ 'detail' ].concat(additionalKeys || []).concat([ 'view' ]));
-}
-
-function MouseEventConnector(Event, additionalKeys) {
+function MouseEventConnector(MouseEvent, additionalKeys) {
   var keys = ['screenX', 'screenY', 'clientX', 'clientY', 'button', 'buttons']
     .concat(additionalKeys || [])
     .concat([ 'relatedTarget' ]);
-  return new ModifierEventConnector(Event, keys);
+  return new ModifierEventConnector(MouseEvent, keys);
 }
 
 // All modifiers are being reduced to a mask during stringification.
-function ModifierEventConnector(EventClass, additionalKeys) {
+function ModifierEventConnector(Event, additionalKeys) {
   var propertyModifiers = [
     'ctrlKey', 'shiftKey', 'altKey', 'metaKey',
   ];
@@ -85,7 +75,7 @@ function ModifierEventConnector(EventClass, additionalKeys) {
       ;
   }
 
-  var connector = new UIEventConnector(EventClass, keys);
+  var connector = new UIEventConnector(Event, keys);
   var index = connector.indexOf(propertyModifiers[0]);
 
   connector.split = pipe(connector.split, function(retVal, evt) {
@@ -101,8 +91,14 @@ function ModifierEventConnector(EventClass, additionalKeys) {
   return connector;
 }
 
-function ClipboardEventConnector(Event, additionalKeys) {
-  var connector = new EventConnector(Event, ['dataType', 'data'].concat(additionalKeys || []));
+function UIEventConnector(UIEvent, additionalKeys) {
+  var keys = [ 'detail' ].concat(additionalKeys || []).concat([ 'view' ]);
+  return new EventConnector(UIEvent, keys);
+}
+
+function ClipboardEventConnector(ClipboardEvent, additionalKeys) {
+  var keys = ['dataType', 'data'].concat(additionalKeys || []);
+  var connector = new EventConnector(ClipboardEvent, keys);
 
   var format = 'text/plain';
   connector.split = pipe(connector.split, function(retVal, evt) {
@@ -112,44 +108,49 @@ function ClipboardEventConnector(Event, additionalKeys) {
   return connector;
 }
 
-function PropertyBasedConnector(Event, keys) {
-  check(typeof Event === 'function', 'Event must be a function.');
+function EventConnector(Event, additionalKeys) {
+  var keys = [ 'type', 'bubbles', 'cancelable' ].concat(additionalKeys || []).concat([ 'target' ]);
+
+  var connector = new InitBasedConnector(function(init) {
+    return new Event(init.type, init);
+  }, keys);
+
+  connector.by = Event;
+  return connector;
+}
+
+function InitBasedConnector(Constructor, keys) {
+  check(typeof Constructor === 'function', 'Constructor must be a function.');
   check(keys instanceof Array, 'keys must be an array of strings');
 
   return {
-    by: Event,
+    by: Constructor,
     split: splitProperties(keys),
-    create: createWithProperties(Event, keys),
-    indexOf: indexOf(keys),
+    create: createWithInit(Constructor, keys),
+    indexOf: [].indexOf.bind(keys),
   };
 }
 
 function splitProperties(keys) {
   return function split(e) {
-    return [ e.type ].concat(keys.map(function(key) { return e[key]; }))
+    return keys.map(function(key) { return e[key]; })
   };
 }
 
-function createWithProperties(Event, keys) {
+function createWithInit(Constructor, keys) {
   return function create(args) {
-    var properties = {};
-    args.slice(1).forEach(function(val, i) { properties[keys[i]] = val; });
-    var e = new Event(args[0], properties);
+    var init = {};
+    args.forEach(function(val, i) { init[keys[i]] = val; });
+    var instance = new Constructor(init);
 
     // Target element is deserialized to parsedTarget non-standard property,
     // because event.target property is read-only and set by the browser
     // during call to Element.dispatchEvent().
     // TODO move this to EventConnector
-    if (typeof properties.target !== 'undefined') {
-      e.parsedTarget = properties.target;
+    if (typeof init.target !== 'undefined') {
+      instance.parsedTarget = init.target;
     }
-    return e;
-  };
-}
-
-function indexOf(keys) {
-  return function(key) {
-    return [ 'type' ].concat(keys).indexOf(key);
+    return instance;
   };
 }
 
@@ -158,8 +159,8 @@ function extend(Connector) {
     withProperties: function () {
       var additionalKeys = [].slice.call(arguments);
 
-      return function(Event, evenMoreKeys) {
-        return new Connector(Event, additionalKeys.concat(evenMoreKeys || []));
+      return function(Constructor, evenMoreKeys) {
+        return new Connector(Constructor, additionalKeys.concat(evenMoreKeys || []));
       };
     },
   };

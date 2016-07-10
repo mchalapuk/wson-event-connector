@@ -219,26 +219,33 @@ var event = wson.parse('[:Event|load|#f|#t|[:HTMLBodyElement|/html`a1`e/body`a1`
 event.parsedTarget.dispatchEvent(event);
 ```
 
-### Property Based Connector
+### Init Based Connector
 
 ```js
-exports.PropertyBasedConnector = function(Class, serializedFields) { ... }
+exports.InitBased = function(Class, serializedFields) { ... }
 ```
 
 Constructs a connector which is able to serialize instances of passed **Class**.
-There are no requirements regarding serialized class, apart from that is must
-be a class. Constructed connector serializes fields of names passed in
-**serializedFields** array and in order as the occur in this array.
+Class' constructor must accept a single initializer object containing values of
+properties for initialization (init object pattern?). Constructed connector
+serializes fields of names passed in **serializedFields** array and in order
+as the occur in this array. During deserialization it creates init object with
+those fields and passed it to the constructor.
 
 ```js
 var WSON = require('wson');
-var PropertyBasedConnector = require('wson-event-connector').PropertyBasedConnector;
+var connectors = require('wson-event-connector');
 
 var wson = new WSON({ connectors: {
-  'Weather': new PropertyBasedConnector(Weather, [ 'temperature', 'pressure', 'humidity', 'sky' ])
+  'Weather': new connectors.InitBased(Weather, [ 'temperature', 'pressure', 'humidity', 'sky' ])
   }});
 
-var weather = new Weather('27C', '1000HpA', '75%', 'clear');
+var weather = new Weather({
+  temperature: '27C',
+  pressure: '1000HpA',
+  humidity: '75%',
+  sky: 'clear'
+});
 console.log(wson.stringify(weather));
 // [:Weather|27C|1000Hpa|75%|clear]
 ```
