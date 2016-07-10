@@ -139,6 +139,10 @@ Near future should bring support for following classes:
  * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)
  * [`StorageEvent`](https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface)
 
+In case when serialization of non-standard vendor-specific events is needed,
+separate module should be created (e.g.&nbsp;`wson-mozilla-connector`).
+Classes exported from this module can simplify this task (see [API docs][api]).
+
 ## Unsupported Events
 
 Serialization of following event classes will not be implemented in this module:
@@ -157,9 +161,7 @@ Serialization of following event classes will not be implemented in this module:
    [`OfflineAudioCompletionEvent`][offline-audio-completion]),
  * <abbr title="Scalable Vector Graphics">SVG</abbr>-related events ([`TimeEvent`][time],
    [`SVGZoomEvent`][svg-zoom]),
- * Non-standard vendor-specific events and properties. These should be
-   implemented in separate module (e.g.&nbsp;`wson-mozilla-controller`).
-   Classes exported from this module can simplify this task (see [API docs][api]).
+ * WebGL-related events ([`WebGLContextEvent`][webgl-context]).
 
 [blob-event]: https://w3c.github.io/mediacapture-record/MediaRecorder.html#blob-event
 [blob]: https://w3c.github.io/FileAPI/#blob
@@ -178,7 +180,7 @@ Serialization of following event classes will not be implemented in this module:
 [audio-worker-creation]: https://webaudio.github.io/web-audio-api/#the-audioworkernodecreationevent-interface
 [time]: https://www.w3.org/TR/2001/REC-smil-animation-20010904/#Events-TimeEvent
 [svg-zoom]: https://www.w3.org/TR/SVG/script.html#InterfaceSVGZoomEvent
-[api]: #api
+[webgl-context]: https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15
 
 ## Why are some properties not serialized?
 
