@@ -143,10 +143,10 @@ Feel free to message me if you desperately need one of above.
 
 **Pull requests are also very welcome!**
 
-> **NOTE**:
+> **CONTRIBUTING GUIDELINES**:
 >
 > Please do not submit pull requests implementing non-standard vendor-specific events.
-> For these, a separate module should be created (e.g.&nbsp;`wson-mozilla-connector`),
+> For those, a separate module should be created (e.g.&nbsp;`wson-mozilla-connector`),
 > with this module as dependency (see [API Reference](#api-reference)).
 
 ## Unsupported Events
