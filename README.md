@@ -22,12 +22,16 @@ structures. This module is an extension to wson that enables serializing
 [DOM events][events] to strings and parsing those strings back to DOM events.
 
 [wson]: https://github.com/tapirdata/wson
-[events]: https://github.com/webfront-toolkit/wson-event-connector#supported-events
+[events]: #supported-events
 
 **Possible Use Cases**
 
- 1. Store references to DOM events between page reloads,
- 2. Record DOM events to later simulate a user during automated test.
+ 1. Record user's interaction with a web page,
+ 1. Simulate a user during automated test
+    (needs [`wson-dom-connector`][wson-dom-connector]),
+ 2. Log DOM events just for debugging.
+
+[wson-dom-connector]: https://github.com/webfront-toolkit/wson-dom-connector
 
 ## Installation
 
