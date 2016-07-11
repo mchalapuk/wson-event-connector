@@ -26,7 +26,7 @@ structures. This module is an extension to wson that enables serializing
 
 **Possible Use Cases**
 
- 1. Record user's interaction with a web page / simulate a user during automated test
+ 1. Record DOM events to later simulate a user during automated test
     (needs [`wson-dom-connector`][wson-dom-connector]),
  2. Log DOM events just for debugging.
 
