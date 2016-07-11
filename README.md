@@ -97,11 +97,8 @@ body.dispatchEvent(new window.MouseEvent('click', {
 // [:MouseEvent|click|#f|#f|#0|#0|#300|#400|#20|#10|#1|#1|#n|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]
 ```
 
-In order to serialize DOM nodes assigned to event properties (`Event.target`,
-`UIEvent.view`, `MouseEvent.relatedTarget`), connectors from
-[wson-dom-connector][dom-connector] module must be used.
-
-[dom-connector]: https://github.com/webfront-toolkit/wson-dom-connector
+Above example uses connectors from [wson-dom-connector][dom-connector]
+module to serialize DOM nodes assigned to event properties.
 
 ## Supported Events
 
@@ -209,6 +206,11 @@ Following properties are by default not serialized:
   be set from JavaScript.
  * [`UIEvent.sourceCapabilities`][source-capabilities], because it's just
   ridiculous to pass the same information in each event.
+ * Properties containing DOM nodes or Window instances
+  ([`Event.target`][target], [`UIEvent.view`][view],
+  [`MouseEvent.relatedTarget`][related-target], [`Touch.target`][touch-target])
+  are serialized when wson is created with connectors from
+  [wson-dom-connector][dom-connector] module.
 
 [default-prevented]: https://developer.mozilla.org/en-US/docs/Web/API/Event/defaultPrevented
 [prevent-default]: https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
@@ -217,6 +219,10 @@ Following properties are by default not serialized:
 [time-stamp]: https://developer.mozilla.org/en-US/docs/Web/API/Event/timeStamp
 [is-trusted]: https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
 [source-capabilities]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/sourceCapabilities
+[view]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/view
+[related-target]: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/relatedTarget
+[touch-target]: https://developer.mozilla.org/en-US/docs/Web/API/Touch/target
+[dom-connector]: https://github.com/webfront-toolkit/wson-dom-connector
 
 ## API Reference
 
@@ -249,15 +255,23 @@ exports.Event = function(EventClass, additionalFields = []) { ... }
 ```
 
 Constructs a connector which is able to serialize instances of **EventClass**.
-Passed class must be derived from or equal `window.Event`.
-Returned connector serializes fields in following order: `Event.bubbles`,
-`Event.cancelable`, **additionalFields...**, `Event.target`.
+Passed class must be derived from or equal [`window.Event`][event].
+Returned connector serializes fields in following order: [`Event.bubbles`][bubbles],
+[`Event.cancelable`][cancelable], **additionalFields...**, [`Event.target`][target].
 
-`Event.target` is not settable from JavaScript. Web browsers assign
-its value inside `EventTarget.dispatchEvent(event)`.
-Events returned from `wson.parse(string)` are not yet dispatched, hence they
-do not have `Event.target` set. Instead, target is deserialized into
+[event]: https://developer.mozilla.org/en-US/docs/Web/API/Event
+[bubbles]: https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles
+[cancelable]: https://developer.mozilla.org/en-US/docs/Web/API/Event/cancelable
+[target]: https://developer.mozilla.org/en-US/docs/Web/API/Event/target
+
+[`Event.target`][target] is not settable from JavaScript. Web browsers assign
+its value inside [`EventTarget.dispatchEvent(event)`][dispatch-event].
+Events returned from [`wson.parse(string)`][parse] are not yet dispatched, hence they
+do not have [`Event.target`][target] set. Instead, target is deserialized into
 non-standard **`Event.parsedTarget`** property (see example below).
+
+[dispatch-event]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+[parse]: https://github.com/tapirdata/wson#wsonparsestr-options
 
 ```js
 var WSON = require('wson');
