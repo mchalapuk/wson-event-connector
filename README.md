@@ -253,9 +253,9 @@ Passed class must be derived from or equal `window.Event`.
 Returned connector serializes fields in following order: `Event.bubbles`,
 `Event.cancelable`, **additionalFields...**, `Event.target`.
 
-`Event.target` property is not settable from JavaScript. Browsers set this
-property inside `EventTarget.dispatch(event)`.
-Events returned from `wson.parse(string)` are not yet dispatched, so they
+`Event.target` property is not settable from JavaScript. Web browsers assign
+value of this property inside `EventTarget.dispatchEvent(event)`.
+Events returned from `wson.parse(string)` are not yet dispatched, hence they
 will not have `Event.target` set. Instead, target is deserialized into
 non-standard **`Event.parsedTarget`** property (see example below).
 
