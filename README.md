@@ -253,8 +253,8 @@ Passed class must be derived from or equal `window.Event`.
 Returned connector serializes fields in following order: `Event.bubbles`,
 `Event.cancelable`, **additionalFields...**, `Event.target`.
 
-`Event.target` is not settable from JavaScript. Browsers assign its value
-inside `EventTarget.dispatchEvent(event)`.
+`Event.target` is not settable from JavaScript. Web browsers assign
+its value inside `EventTarget.dispatchEvent(event)`.
 Events returned from `wson.parse(string)` are not yet dispatched, hence they
 do not have `Event.target` set. Instead, target is deserialized into
 non-standard **`Event.parsedTarget`** property (see example below).
@@ -280,10 +280,10 @@ exports.InitBased = function(Class, serializedFields) { ... }
 ```
 
 Constructs a connector which is able to serialize instances of **Class**.
-Class' constructor must accept single argument, which is a map containing initial
-values for properties of constructed object (init object pattern?). Constructed
-connector serializes fields of names and in order as passed in
-**serializedFields** array.
+Class' constructor must accept single argument, which is&nbsp;a map containing
+initial values for properties of constructed object (init object pattern?).
+Constructed connector serializes fields of names and in order as passed
+in **serializedFields** array.
 
 ```js
 var WSON = require('wson');
