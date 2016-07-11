@@ -221,7 +221,7 @@ Following properties are by default not serialized:
 ## API Reference
 
 This document describes API exported by this (`wson-event-connector`) module.
-Please refer to [wson's documentation][wson] for description of wson's API
+Please refer to [wson's documentation][wson] for&nbsp;description of wson's API
 and serialization algorithm.
 
 ### All Connectors
@@ -230,7 +230,7 @@ and serialization algorithm.
 exports = function(window, additionalFields = []) { ... }
 ```
 Creates WSON connectors for all event classes found in **window** namespace.
-All created connectors will be extended to serialize fields passed
+Created connectors will be extended to&nbsp;serialize fields passed
 in **additionalFields** array. Function returns a map
 (`event class name => connector instance`), which can be passed
 as "connectors" option to WSON's constructor (see example below).
@@ -253,10 +253,10 @@ Passed class must be derived from or equal `window.Event`.
 Returned connector serializes fields in following order: `Event.bubbles`,
 `Event.cancelable`, **additionalFields...**, `Event.target`.
 
-`Event.target` property is not settable from JavaScript. Web browsers assign
-value of this property inside `EventTarget.dispatchEvent(event)`.
+`Event.target` is not settable from JavaScript. Browsers assign its value
+inside `EventTarget.dispatchEvent(event)`.
 Events returned from `wson.parse(string)` are not yet dispatched, hence they
-will not have `Event.target` set. Instead, target is deserialized into
+do not have `Event.target` set. Instead, target is deserialized into
 non-standard **`Event.parsedTarget`** property (see example below).
 
 ```js
