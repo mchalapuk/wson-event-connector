@@ -1,6 +1,3 @@
-[npm-url]: https://npmjs.org/package/wson-event-connector
-[npm-image]: https://badge.fury.io/js/wson-event-connector.svg
-
 [travis-url]: http://travis-ci.org/webfront-toolkit/wson-event-connector
 [travis-image]: https://api.travis-ci.org/webfront-toolkit/wson-event-connector.svg
 
@@ -10,12 +7,15 @@
 [david-url-dev]: https://david-dm.org/webfront-toolkit/wson-event-connector#info=devDependencies
 [david-image-dev]: https://david-dm.org/webfront-toolkit/wson-event-connector/dev-status.svg
 
+[npm-url]: https://npmjs.org/package/wson-event-connector
+[npm-image]: https://badge.fury.io/js/wson-event-connector.svg
+
 # wson-event-connector
 
-[![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][david-image]][david-url]
 [![devDependency Status][david-image-dev]][david-url-dev]
+[![NPM version][npm-image]][npm-url]
 
 [WSON][wson] is a human-readable data-interchange format with support for cyclic
 structures. This module is an extension to wson that enables serializing
