@@ -222,7 +222,7 @@ Following properties are by default not serialized:
 
 This document describes API exported by this (`wson-event-connector`) module.
 Please refer to [wson's documentation][wson] for description of wson's API
-and serialization algotithm.
+and serialization algorithm.
 
 ### All Connectors
 
@@ -239,7 +239,7 @@ as "connectors" option to WSON's constructor (see example below).
 var WSON = require('wson');
 var eventConnectors = require('wson-event-connector');
 
-var wson = new WSON({ connectors: eventConnectors(window) };
+var wson = new WSON({ connectors: eventConnectors(window) });
 ```
 
 ### Event Connector
@@ -253,9 +253,9 @@ Passed class must be derived from or equal `window.Event`.
 Returned connector serializes fields in following order: `Event.bubbles`,
 `Event.cancelable`, **additionalFields...**, `Event.target`.
 
-`Event.target` property is not settable from JavaScript. Web browsers set this
-property during calls to `EventTarget.dispatch(event)`.
-As events returned from `wson.parse(string)` are not yet dispatched, they
+`Event.target` property is not settable from JavaScript. Browsers set this
+property inside `EventTarget.dispatch(event)`.
+Events returned from `wson.parse(string)` are not yet dispatched, so they
 will not have `Event.target` set. Instead, target is deserialized into
 non-standard **`Event.parsedTarget`** property (see example below).
 
@@ -280,7 +280,7 @@ exports.InitBased = function(Class, serializedFields) { ... }
 ```
 
 Constructs a connector which is able to serialize instances of **Class**.
-Class' constructor must accept single argument of a map containing initial
+Class' constructor must accept single argument, which is a map containing initial
 values for properties of constructed object (init object pattern?). Constructed
 connector serializes fields of names and in order as passed in
 **serializedFields** array.
