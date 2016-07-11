@@ -199,7 +199,7 @@ Following properties are by default not serialized:
   called inside an event listener changes it to `false`).
   The whole point of event serialization is to be able to dispatch them
   on another instance of window containing the same HTML document.
-  Properties need to be in initial (pre-dispatch) value in order for event
+  Properties need to be in initial (pre-dispatch) value for&nbsp;event
   listeners to work properly.
  * Properties, which contain meta-information about event and current
    state of its propagation ([`Event.currentTarget`][current-target],
