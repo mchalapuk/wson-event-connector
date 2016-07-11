@@ -7,7 +7,6 @@ var constructors = {
     .withProperties('animationName', 'elapsedTime', 'pseudoElement'),
   'BeforeUnloadEvent': EventConnector,
   'ClipboardEvent': ClipboardEventConnector,
-  'CloseEvent': extend(EventConnector).withProperties('code', 'reason', 'wasClean'),
   'CompositionEvent': extend(EventConnector).withProperties('data', 'locale', 'view'),
   'CustomEvent': extend(EventConnector).withProperties('detail'),
   'FocusEvent': extend(UIEventConnector).withProperties('relatedTarget'),

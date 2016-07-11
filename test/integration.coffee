@@ -36,12 +36,6 @@ testParams = [
     '[:ClipboardEvent|copy|#f|#t|text/plain|https`i//github.com/|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
   ]
   [
-    'CloseEvent'
-    'close'
-    { bubbles: true, cancelable: true, code: 1000, reason: '', wasClean: true }
-    '[:CloseEvent|close|#t|#t|#1000|#|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]'
-  ]
-  [
     'CompositionEvent'
     'start'
     { bubbles: true, cancelable: true, data: 'deleted text', locale: 'C' }

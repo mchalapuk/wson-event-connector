@@ -156,13 +156,6 @@ testParams = [
     [ 'clipboardData' ]
   ]
   [
-    'CloseEvent'
-    'close'
-    { bubbles: false, cancelable: false, code: 1000, reason: '', wasClean: true }
-    [ 'close', false, false, 1000, '', true, null ]
-    [ 'properties' ]
-  ]
-  [
     'CompositionEvent'
     'start'
     { bubbles: true, cancelable: true, data: 'deleted text', locale: 'C' }

@@ -19,7 +19,6 @@ module.exports = (window) ->
       @clipboardData = new TransferData init.data
       super eventType, init
 
-  CloseEvent = extend window.Event, code: 0, wasClean: false, reason: null
   FontFaceEvent = extend window.Event, {
     family: null, src: null, usedSrc: null, style: null,
     weight: null, stretch: null, unicodeRange: null, variant: null, featureSetting: null
@@ -83,7 +82,6 @@ module.exports = (window) ->
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
   window.ClipboardEvent = ClipboardEvent if !window.ClipboardEvent?
   window.CompositionEvent = CompositionEvent if !window.CompositionEvent?
-  window.CloseEvent = CloseEvent if !window.CloseEvent?
   window.FontFaceEvent = FontFaceEvent if !window.FontFaceEvent?
   window.KeyboardEvent = KeyboardEvent #if !window.KeyboardEvent?
   window.MouseEvent = MouseEvent #if !window.MouseEvent?
