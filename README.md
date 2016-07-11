@@ -1,8 +1,8 @@
 [npm-url]: https://npmjs.org/package/wson-event-connector
-[npm-image]: https://img.shields.io/npm/v/wson-event-connector.svg?maxAge=1
+[npm-image]: https://badge.fury.io/js/wson-event-connector.svg
 
 [travis-url]: http://travis-ci.org/webfront-toolkit/wson-event-connector
-[travis-image]: https://img.shields.io/travis/webfront-toolkit/wson-event-connector.svg?maxAge=1
+[travis-image]: https://api.travis-ci.org/webfront-toolkit/wson-event-connector.svg
 
 [david-url]: https://david-dm.org/webfront-toolkit/wson-event-connector
 [david-image]: https://david-dm.org/webfront-toolkit/wson-event-connector.svg
@@ -10,23 +10,19 @@
 [david-url-dev]: https://david-dm.org/webfront-toolkit/wson-event-connector#info=devDependencies
 [david-image-dev]: https://david-dm.org/webfront-toolkit/wson-event-connector/dev-status.svg
 
-[license-url]: LICENSE
-[license-image]: https://img.shields.io/github/license/webfront-toolkit/wson-event-connector.svg?maxAge=2592000
-
 # wson-event-connector
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][david-image]][david-url]
 [![devDependency Status][david-image-dev]][david-url-dev]
-[![License][license-image]][license-url]
 
 [WSON][wson] is a human-readable data-interchange format with support for cyclic
 structures. This module is an extension to wson that enables serializing
 [DOM events][events] to strings and parsing those strings back to DOM events.
 
 [wson]: https://github.com/tapirdata/wson
-[events]: https://developer.mozilla.org/en-US/docs/Web/API/Event
+[events]: https://github.com/webfront-toolkit/wson-event-connector#supported-events
 
 **Possible Use Cases**
 
