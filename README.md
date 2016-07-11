@@ -220,40 +220,44 @@ Following properties are by default not serialized:
 
 ## API Reference
 
-This document contains API's exported by this module. Please refer to [wson's documentation][wson] for more.
+This document describes API exported by this (`wson-event-connector`) module.
+Please refer to [wson's documentation][wson] for description of wson's API
+and serialization algotithm.
 
 ### All Connectors
 
 ```js
-exports = function(window) { ... }
+exports = function(window, additionalFields = []) { ... }
 ```
-
-Creates WSON connectors of all events implemented by this module. Returns a map
-from event class name to instance of connector able to serialize events of this
-class name found in passed **window** namespace.
+Creates WSON connectors for all event classes found in **window** namespace.
+All created connectors will be extended to serialize fields passed
+in **additionalFields** array. Function returns a map
+(`event class name => connector instance`), which can be passed
+as "connectors" option to WSON's constructor (see example below).
 
 ```js
 var WSON = require('wson');
-var connectors = require('wson-event-connector');
+var eventConnectors = require('wson-event-connector');
 
-var wson = new WSON({ connectors: connectors(window) };
+var wson = new WSON({ connectors: eventConnectors(window) };
 ```
 
 ### Event Connector
 
 ```js
-exports.Event = function(EventClass, additionalFields) { ... }
+exports.Event = function(EventClass, additionalFields = []) { ... }
 ```
 
-Constructs a connector which is able to serialize event instances of passed
-**EventClass**. Passed class should be derived from `window.Event`. Fields
-are being serialized in following order: `Event.bubbles`, `Event.cancelable`,
-**additionalFields**, `Event.target`.
+Constructs a connector which is able to serialize instances of **EventClass**.
+Passed class must be derived from or equal `window.Event`.
+Returned connector serializes fields in following order: `Event.bubbles`,
+`Event.cancelable`, **additionalFields...**, `Event.target`.
 
-`Event.target` property is not settable from JavaScript. A web browser sets this
-property to the instance on which `EventTarget.dispatch(event)` was called.
-In events returned from `wson.parse(string)`, value of `Event.target` is `null`.
-Target is deserialized into non-standard **`Event.parsedTarget`** property.
+`Event.target` property is not settable from JavaScript. Web browsers set this
+property during calls to `EventTarget.dispatch(event)`.
+As events returned from `wson.parse(string)` are not yet dispatched, they
+will not have `Event.target` set. Instead, target is deserialized into
+non-standard **`Event.parsedTarget`** property (see example below).
 
 ```js
 var WSON = require('wson');
@@ -275,12 +279,11 @@ event.parsedTarget.dispatchEvent(event);
 exports.InitBased = function(Class, serializedFields) { ... }
 ```
 
-Constructs a connector which is able to serialize instances of passed **Class**.
-Class' constructor must accept a single initializer object containing values of
-properties for initialization (init object pattern?). Constructed connector
-serializes fields of names passed in **serializedFields** array and in order
-as the occur in this array. During deserialization it creates init object with
-those fields and passed it to the constructor.
+Constructs a connector which is able to serialize instances of **Class**.
+Class' constructor must accept single argument of a map containing initial
+values for properties of constructed object (init object pattern?). Constructed
+connector serializes fields of names and in order as passed in
+**serializedFields** array.
 
 ```js
 var WSON = require('wson');
