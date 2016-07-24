@@ -35,5 +35,7 @@
     "wson": "^1.10.0",
     "wson-dom-connector": "^0.5.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "offensive": "^0.4.0"
+  }
 }

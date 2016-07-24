@@ -1,6 +1,8 @@
 // license: MIT
 'use strict';
 
+var check = require('offensive');
+
 var constructors = {
   'Event': EventConnector,
   'AnimationEvent': extend(EventConnector)
@@ -27,7 +29,7 @@ var constructors = {
 };
 
 module.exports = function getAllConnectors(namespace, keys) {
-  check(typeof namespace === 'object', 'Passed namespace is not an object.');
+  check(namespace, 'namespace').is.anObject();
 
   var connectors = {};
   Object.keys(constructors)
@@ -147,8 +149,8 @@ function EventConnector(Event, additionalKeys) {
 }
 
 function InitBasedConnector(Constructor, keys) {
-  check(typeof Constructor === 'function', 'Constructor must be a function.');
-  check(keys instanceof Array, 'keys must be an array of strings');
+  check(Constructor, 'Constructor').is.aFunction();
+  check(keys, 'keys').is.anArray();
 
   return {
     by: Constructor,
@@ -199,11 +201,5 @@ function pipe(previous, next) {
     var retVal = previous.apply(null, args);
     return next.apply(null, [ retVal ].concat(args)) || retVal;
   };
-}
-
-function check(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
 }
 
