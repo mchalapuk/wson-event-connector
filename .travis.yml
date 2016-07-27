@@ -4,7 +4,7 @@ node_js:
   - "4"
 install:
   - npm install -g mocha-cli
-  - npm install --no-optional
+  - npm install --no-option
 script:
   - npm test
 
