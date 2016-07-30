@@ -95,6 +95,12 @@ testParams = [
     '[:MouseEvent|click|#f|#f|#0|#16383|#100|#200|#300|#400|#1|#3|[:Document]|[:Window]|[:HTMLBodyElement|/body`a1`e]]'
   ]
   [
+    'PageTransitionEvent'
+    'pageshow'
+    { bubbles: true, cancelable: true, persisted: true }
+    '[:PageTransitionEvent|pageshow|#t|#t|#t|[:HTMLBodyElement|/body`a1`e]]'
+  ]
+  [
     'PointerEvent'
     'pointerdown'
     {

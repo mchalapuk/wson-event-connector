@@ -118,6 +118,7 @@ Following events types are currently supported:
   * [`ClipboardEvent`](https://w3c.github.io/clipboard-apis/#clipboard-event-interfaces)
   * [`CustomEvent`](https://dom.spec.whatwg.org/#interface-customevent)
   * [`FontFaceEvent`](https://wiki.csswg.org/spec/font-load-events)
+  * [`PageTransitionEvent`](https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface)
 
 ## (Not Yet) Supported Events
 
@@ -130,7 +131,6 @@ Near future should bring support for following classes:
  * [`GamepadEvent`](https://w3c.github.io/gamepad/#gamepadevent-interface)
  * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent)
  * [`IDBVersionChangeEvent`](https://www.w3.org/TR/IndexedDB/#idl-def-IDBVersionChangeEvent)
- * [`PageTransitionEvent`](https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface)
  * [`PopStateEvent`](https://html.spec.whatwg.org/multipage/browsers.html#popstateevent)
  * [`ProgressEvent`](https://xhr.spec.whatwg.org/#interface-progressevent)
  * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)

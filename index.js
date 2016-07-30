@@ -18,6 +18,7 @@ var constructors = {
   'KeyboardEvent': extend(ModifierEventConnector)
     .withProperties('key', 'code', 'location', 'repeat', 'isComposing'),
   'MouseEvent': MouseEventConnector,
+  'PageTransitionEvent': extend(EventConnector).withProperties('persisted'),
   'PointerEvent': extend(MouseEventConnector).withProperties('pointerId', 'width', 'height',
       'pressure', 'tangentialPressure', 'tiltX', 'tiltY', 'twist', 'pointerType', 'isPrimary'),
   'TouchEvent': TouchEventConnector,

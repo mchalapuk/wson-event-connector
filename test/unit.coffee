@@ -227,6 +227,13 @@ testParams = [
     [ 'modifiers', 'properties' ]
   ]
   [
+    'PageTransitionEvent'
+    'pageshow'
+    { bubbles: false, cancelable: false, persisted: true }
+    [ 'pageshow', false, false, true, null ]
+    [ 'properties' ]
+  ]
+  [
     'PointerEvent'
     'pointerup'
     {
