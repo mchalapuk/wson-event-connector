@@ -93,7 +93,7 @@ body.dispatchEvent(new window.MouseEvent('click', {
   button: 1,
   buttons: 1,
 });
-// [:MouseEvent|click|#f|#f|#0|#0|#300|#400|#20|#10|#1|#1|#n|#n|[:HTMLBodyElement|/html`a1`e/body`a1`e]]
+// [:MouseEvent|click|#f|#f|#0|#0|#300|#400|#20|#10|#1|#1|#n|#n|[:HTMLBodyElement|/body`a1`e]]
 ```
 
 Above example uses connectors from [wson-dom-connector][dom-connector]
