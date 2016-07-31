@@ -117,6 +117,12 @@ testParams = [
     '[:PointerEvent|pointerdown|#f|#f|#0|#4|#100|#200|#30|#40|#0|#0|#4|#2|#2|#1|#1|#20|#-15|#4|pen|#t|[:Document]|[:Window]|[:HTMLBodyElement|/body`a1`e]]'
   ]
   [
+    'PopStateEvent'
+    'popstate'
+    { bubbles: true, cancelable: true, state: {} }
+    '[:PopStateEvent|popstate|#t|#t|{}|[:HTMLBodyElement|/body`a1`e]]'
+  ]
+  [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 1 }

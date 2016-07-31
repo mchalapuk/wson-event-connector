@@ -22,6 +22,7 @@ var constructors = {
   'PageTransitionEvent': extend(EventConnector).withProperties('persisted'),
   'PointerEvent': extend(MouseEventConnector).withProperties('pointerId', 'width', 'height',
       'pressure', 'tangentialPressure', 'tiltX', 'tiltY', 'twist', 'pointerType', 'isPrimary'),
+  'PopStateEvent': extend(EventConnector).withProperties('state'),
   'TouchEvent': TouchEventConnector,
   'Touch': extend(InitBasedConnector).withProperties('identifier', 'target', 'clientX', 'clientY',
       'screenX', 'screenY', 'pageX', 'pageY', 'radiusX', 'radiusY', 'rotationAngle', 'force'),

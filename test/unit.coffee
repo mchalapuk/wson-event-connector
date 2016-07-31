@@ -259,6 +259,13 @@ testParams = [
     [ 'modifiers', 'properties' ]
   ]
   [
+    'PopStateEvent'
+    'popstate'
+    { bubbles: true, cancelable: false, state: 'state' }
+    [ 'popstate', true, false, 'state', null ]
+    [ 'properties' ]
+  ]
+  [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 10 }
