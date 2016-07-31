@@ -121,6 +121,7 @@ Following events types are currently supported:
   * [`HashChangeEvent`](https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent)
   * [`PageTransitionEvent`](https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface)
   * [`PopStateEvent`](https://html.spec.whatwg.org/multipage/browsers.html#popstateevent)
+  * [`TransitionEvent`](https://drafts.csswg.org/css-transitions/#Events-TransitionEvent)
 
 ## (Not Yet) Supported Events
 
@@ -135,7 +136,6 @@ Near future should bring support for following classes:
  * [`ProgressEvent`](https://xhr.spec.whatwg.org/#interface-progressevent)
  * [`SensorReadingEvent`](https://w3c.github.io/sensors/#the-sensor-reading-event-interface)
  * [`StorageEvent`](https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface)
- * [`TransitionEvent`](https://drafts.csswg.org/css-transitions/#Events-TransitionEvent)
 
 Feel free to message me if you desperately need one of above.
 

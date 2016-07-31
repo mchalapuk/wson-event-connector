@@ -123,6 +123,12 @@ testParams = [
     '[:PopStateEvent|popstate|#t|#t|{}|[:HTMLBodyElement|/body`a1`e]]'
   ]
   [
+    'TransitionEvent'
+    'transitionstart'
+    { bubbles: true, cancelable: true, propertyName: 'opacity', elapsedTime: 1, pseudoElement: 'before' }
+    '[:TransitionEvent|transitionstart|#t|#t|opacity|#1|before|[:HTMLBodyElement|/body`a1`e]]'
+  ]
+  [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 1 }

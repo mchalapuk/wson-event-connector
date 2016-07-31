@@ -266,6 +266,13 @@ testParams = [
     [ 'properties' ]
   ]
   [
+    'TransitionEvent'
+    'transitionend'
+    { bubbles: true, cancelable: false, propertyName: 'margin-left', elapsedTime: 2, pseudoElement: 'after' }
+    [ 'transitionend', true, false, 'margin-left', 2, 'after', null ]
+    [ 'properties' ]
+  ]
+  [
     'UIEvent'
     'swipe'
     { bubbles: true, cancelable: true, detail: 10 }

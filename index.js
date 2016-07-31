@@ -26,6 +26,8 @@ var constructors = {
   'TouchEvent': TouchEventConnector,
   'Touch': extend(InitBasedConnector).withProperties('identifier', 'target', 'clientX', 'clientY',
       'screenX', 'screenY', 'pageX', 'pageY', 'radiusX', 'radiusY', 'rotationAngle', 'force'),
+  'TransitionEvent': extend(EventConnector)
+    .withProperties('propertyName', 'elapsedTime', 'pseudoElement'),
   'UIEvent': UIEventConnector,
   'WheelEvent': extend(MouseEventConnector)
     .withProperties('deltaX', 'deltaY', 'deltaZ', 'deltaMode'),

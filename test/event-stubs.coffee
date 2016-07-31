@@ -78,6 +78,7 @@ module.exports = (window) ->
       @[key] = new TouchList(init[key]) for key in [ 'touches', 'targetTouches', 'changedTouches' ]
 
   PageTransitionEvent = extend window.Event, persisted: false
+  TransitionEvent = extend window.Event, propertyName: undefined, elapsedTime: 0, pseudoElement: ''
 
   window.AnimationEvent = AnimationEvent if !window.AnimationEvent?
   window.BeforeUnloadEvent = BeforeUnloadEvent if !window.BeforeUnloadEvent?
@@ -92,6 +93,7 @@ module.exports = (window) ->
   window.WheelEvent = WheelEvent #if !window.WheelEvent?
   window.InputEvent = InputEvent if !window.InputEvent?
   window.PageTransitionEvent = PageTransitionEvent if !window.PageTransitionEvent?
+  window.TransitionEvent = TransitionEvent if !window.TransitionEvent?
 
   window
 
