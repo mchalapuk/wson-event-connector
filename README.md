@@ -282,7 +282,7 @@ var wson = new WSON({ connectors: {
   'HTMLBodyElement': domConnectors(window).HTMLBodyElement,
   }});
 
-var event = wson.parse('[:Event|load|#f|#t|[:HTMLBodyElement|/html`a1`e/body`a1`e]]');
+var event = wson.parse('[:Event|load|#f|#t|[:HTMLBodyElement|/body`a1`e]]');
 event.parsedTarget.dispatchEvent(event);
 ```
 
