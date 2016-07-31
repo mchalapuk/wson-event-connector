@@ -14,6 +14,7 @@ var constructors = {
   'FocusEvent': extend(UIEventConnector).withProperties('relatedTarget'),
   'FontFaceEvent': extend(EventConnector).withProperties('family', 'src', 'usedSrc', 'style',
       'weight', 'stretch', 'unicodeRange', 'variant', 'featureSetting'),
+  'HashChangeEvent': extend(EventConnector).withProperties('oldURL', 'newURL'),
   'InputEvent': extend(UIEventConnector).withProperties('data', 'isComposing'),
   'KeyboardEvent': extend(ModifierEventConnector)
     .withProperties('key', 'code', 'location', 'repeat', 'isComposing'),

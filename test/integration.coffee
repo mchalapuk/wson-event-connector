@@ -65,6 +65,12 @@ testParams = [
     '[:FontFaceEvent|load|#f|#f|Arial|file`i//Arial.ttf|file`i//Arial.ttf|normal|bold|normal|unset|normal|#n|[:HTMLBodyElement|/body`a1`e]]',
   ]
   [
+    'HashChangeEvent'
+    'hashchange'
+    { bubbles: true, cancelable: true, oldURL: 'old', newURL: 'new' }
+    '[:HashChangeEvent|hashchange|#t|#t|old|new|[:HTMLBodyElement|/body`a1`e]]'
+  ]
+  [
     'InputEvent'
     'beforeinput'
     { cancelable: true, data: '', isComposing: false }

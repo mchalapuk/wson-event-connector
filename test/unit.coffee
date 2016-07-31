@@ -194,6 +194,13 @@ testParams = [
     [ 'properties' ]
   ]
   [
+    'HashChangeEvent'
+    'hashchange'
+    { bubbles: false, cancelable: false, oldURL: 'previous', newURL: 'next' }
+    [ 'hashchange', false, false, 'previous', 'next', null ]
+    [ 'properties' ]
+  ]
+  [
     'InputEvent'
     'beforeinput'
     { bubbles: true, cancelable: false, detail: 0, data: '', isComposing: false }
