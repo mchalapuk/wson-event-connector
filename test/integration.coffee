@@ -4,7 +4,7 @@ _ = require 'underscore'
 
 jsdom = require 'jsdom'
 declareMissingEvents = require './event-stubs.coffee'
-WSON = require 'wson'
+WSON = (require 'wson').Wson
 
 delete require.cache[ require.resolve '../' ]
 eventConnectors = require '..'

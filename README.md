@@ -45,7 +45,7 @@ It can be used in a web browser via [browserify][browserify]...
 [browserify]: https://github.com/substack/node-browserify
 
 ```javascript
-var WSON = require("wson");
+var WSON = require("wson").Wson;
 var eventConnectors = require("wson-event-connector");
 
 var wson = new WSON({
@@ -69,7 +69,7 @@ events.forEach(function(name) {
 [jsdom]: https://github.com/tmpvar/jsdom
 
 ```javascript
-var WSON = require("wson");
+var WSON = require("wson").Wson;
 var eventConnectors = require("wson-event-connector");
 var domConnectors = require("wson-dom-connector");
 var jsdom = require("jsdom");
@@ -241,7 +241,7 @@ in **additionalFields** array. Function returns a map
 as "connectors" option to WSON's constructor (see example below).
 
 ```js
-var WSON = require('wson');
+var WSON = require('wson').Wson;
 var eventConnectors = require('wson-event-connector');
 
 var wson = new WSON({ connectors: eventConnectors(window) });
@@ -273,7 +273,7 @@ non-standard **`Event.parsedTarget`** property (see example below).
 [parse]: https://github.com/tapirdata/wson#wsonparsestr-options
 
 ```js
-var WSON = require('wson');
+var WSON = require('wson').Wson;
 var eventConnectors = require('wson-event-connector');
 var domConnectors = require('wson-dom-connector');
 
@@ -299,7 +299,7 @@ Constructed connector serializes fields of names and in order as passed
 in **serializedFields** array.
 
 ```js
-var WSON = require('wson');
+var WSON = require('wson').Wson;
 var connectors = require('wson-event-connector');
 
 var wson = new WSON({ connectors: {
