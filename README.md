@@ -1,11 +1,11 @@
-[travis-url]: http://travis-ci.org/webfront-toolkit/wson-event-connector
-[travis-image]: https://api.travis-ci.org/webfront-toolkit/wson-event-connector.svg
+[travis-url]: http://travis-ci.org/muroc/wson-event-connector
+[travis-image]: https://api.travis-ci.org/muroc/wson-event-connector.svg
 
-[david-url]: https://david-dm.org/webfront-toolkit/wson-event-connector
-[david-image]: https://david-dm.org/webfront-toolkit/wson-event-connector.svg
+[david-url]: https://david-dm.org/muroc/wson-event-connector
+[david-image]: https://david-dm.org/muroc/wson-event-connector.svg
 
-[david-url-dev]: https://david-dm.org/webfront-toolkit/wson-event-connector#info=devDependencies
-[david-image-dev]: https://david-dm.org/webfront-toolkit/wson-event-connector/dev-status.svg
+[david-url-dev]: https://david-dm.org/muroc/wson-event-connector#info=devDependencies
+[david-image-dev]: https://david-dm.org/muroc/wson-event-connector/dev-status.svg
 
 [npm-url]: https://npmjs.org/package/wson-event-connector
 [npm-image]: https://badge.fury.io/js/wson-event-connector.svg
@@ -30,7 +30,7 @@ structures. This module is an extension to wson that enables serializing
     (needs [`wson-dom-connector`][wson-dom-connector]),
  2. Log DOM events just for debugging.
 
-[wson-dom-connector]: https://github.com/webfront-toolkit/wson-dom-connector
+[wson-dom-connector]: https://github.com/muroc/wson-dom-connector
 
 ## Installation
 
@@ -221,7 +221,7 @@ Following properties are by default not serialized:
 [view]: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/view
 [related-target]: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/relatedTarget
 [touch-target]: https://developer.mozilla.org/en-US/docs/Web/API/Touch/target
-[dom-connector]: https://github.com/webfront-toolkit/wson-dom-connector
+[dom-connector]: https://github.com/muroc/wson-dom-connector
 
 ## API Reference
 
