@@ -1,7 +1,10 @@
 // license: MIT
 'use strict';
 
-var check = require('offensive');
+var check = require('offensive').default;
+require('offensive/assertions/anObject/register');
+require('offensive/assertions/aFunction/register');
+require('offensive/assertions/anArray/register');
 
 var constructors = {
   'Event': EventConnector,

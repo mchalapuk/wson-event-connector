@@ -3,7 +3,7 @@ should = require 'should'
 
 jsdom = require 'jsdom'
 _ = require 'underscore'
-declareMissingEvents = require './event-stubs.coffee'
+declareMissingEvents = require './event-stubs'
 
 delete require.cache[ require.resolve '../' ]
 connectors = require '..'
@@ -12,7 +12,7 @@ connectors = require '..'
 # This file contains unit tests of all classes implemented by this module.
 
 window = null
-before -> window = declareMissingEvents jsdom.jsdom().defaultView
+before -> window = declareMissingEvents new jsdom.JSDOM().window
 after -> window.close()
 
 # A map from name to check functions (defined at the bottom of this file).

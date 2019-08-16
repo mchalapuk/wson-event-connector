@@ -3,7 +3,7 @@ mocha = require 'mocha'
 _ = require 'underscore'
 
 jsdom = require 'jsdom'
-declareMissingEvents = require './event-stubs.coffee'
+declareMissingEvents = require './event-stubs'
 WSON = (require 'wson').Wson
 
 delete require.cache[ require.resolve '../' ]
@@ -164,7 +164,7 @@ describe "WSON with all Event and DOM connectors", ->
   testedWSON = null
 
   beforeEach ->
-    window = declareMissingEvents jsdom.jsdom().defaultView
+    window = declareMissingEvents new jsdom.JSDOM().window
     window.document.evaluate = -> throw "not working"
     body = window.document.body
     testedWSON = new WSON connectors: _.extend eventConnectors(window), domConnectors(window)
