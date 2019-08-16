@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webfront-toolkit/wson-event-connector.git"
+    "url": "git+https://github.com/mchalapuk/wson-event-connector.git"
   },
   "keywords": [
     "dom",
@@ -24,9 +24,9 @@
   "author": "Maciej Chałapuk",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/webfront-toolkit/wson-event-connector/issues"
+    "url": "https://github.com/mchalapuk/wson-event-connector/issues"
   },
-  "homepage": "https://github.com/webfront-toolkit/wson-event-connector",
+  "homepage": "https://github.com/mchalapuk/wson-event-connector",
   "devDependencies": {
     "coffee-script": "^1.11.1",
     "jsdom": "^9.6.0",
