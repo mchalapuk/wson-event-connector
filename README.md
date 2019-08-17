@@ -1,11 +1,11 @@
-[travis-url]: http://travis-ci.org/muroc/wson-event-connector
-[travis-image]: https://api.travis-ci.org/muroc/wson-event-connector.svg
+[travis-url]: http://travis-ci.org/mchalapuk/wson-event-connector
+[travis-image]: https://api.travis-ci.org/mchalapuk/wson-event-connector.svg
 
-[david-url]: https://david-dm.org/muroc/wson-event-connector
-[david-image]: https://david-dm.org/muroc/wson-event-connector.svg
+[david-url]: https://david-dm.org/mchalapuk/wson-event-connector
+[david-image]: https://david-dm.org/mchalapuk/wson-event-connector.svg
 
-[david-url-dev]: https://david-dm.org/muroc/wson-event-connector#info=devDependencies
-[david-image-dev]: https://david-dm.org/muroc/wson-event-connector/dev-status.svg
+[david-url-dev]: https://david-dm.org/mchalapuk/wson-event-connector#info=devDependencies
+[david-image-dev]: https://david-dm.org/mchalapuk/wson-event-connector/dev-status.svg
 
 [npm-url]: https://npmjs.org/package/wson-event-connector
 [npm-image]: https://badge.fury.io/js/wson-event-connector.svg
@@ -30,7 +30,7 @@ structures. This module is an extension to wson that enables serializing
     (needs [`wson-dom-connector`][wson-dom-connector]),
  2. Log DOM events just for debugging.
 
-[wson-dom-connector]: https://github.com/muroc/wson-dom-connector
+[wson-dom-connector]: https://github.com/mchalapuk/wson-dom-connector
 
 ## Installation
 
@@ -318,6 +318,6 @@ console.log(wson.stringify(weather));
 
 ## License
 
-Copyright &copy; 2016 Maciej Chałapuk.
+Copyright &copy; 2016 - 2019 Maciej Chałapuk.
 Released under [MIT license](LICENSE).
 
