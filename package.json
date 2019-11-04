@@ -29,12 +29,12 @@
   "homepage": "https://github.com/mchalapuk/wson-event-connector",
   "devDependencies": {
     "coffee-script": "^1.11.1",
-    "jsdom": "^15.2.0",
+    "jsdom": "^15.2.1",
     "mocha": "^6.2.2",
     "should": "^13.2.3",
     "underscore": "^1.8.3",
     "wson": "^2.0.0",
-    "wson-dom-connector": "^0.7.31"
+    "wson-dom-connector": "^0.7.32"
   },
   "dependencies": {
     "offensive": "^2.1.34"
