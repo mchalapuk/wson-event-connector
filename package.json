@@ -32,7 +32,7 @@
     "jsdom": "^15.2.1",
     "mocha": "^7.0.0",
     "should": "^13.2.3",
-    "underscore": "^1.8.3",
+    "underscore": "^1.9.2",
     "wson": "^2.0.0",
     "wson-dom-connector": "^0.7.56"
   },
