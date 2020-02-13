@@ -34,9 +34,9 @@
     "should": "^13.2.3",
     "underscore": "^1.9.2",
     "wson": "^2.0.0",
-    "wson-dom-connector": "^0.7.68"
+    "wson-dom-connector": "^0.7.69"
   },
   "dependencies": {
-    "offensive": "^2.1.70"
+    "offensive": "^2.1.71"
   }
 }
