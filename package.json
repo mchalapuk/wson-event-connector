@@ -32,11 +32,11 @@
     "jsdom": "^16.2.2",
     "mocha": "^7.1.1",
     "should": "^13.2.3",
-    "underscore": "^1.9.2",
+    "underscore": "^1.10.2",
     "wson": "^2.0.0",
-    "wson-dom-connector": "^0.7.82"
+    "wson-dom-connector": "^0.7.83"
   },
   "dependencies": {
-    "offensive": "^2.1.82"
+    "offensive": "^2.1.83"
   }
 }
