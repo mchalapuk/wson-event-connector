@@ -1,6 +1,6 @@
 {
   "name": "wson-event-connector",
-  "version": "0.5.109",
+  "version": "0.5.110",
   "description": "Serialize DOM events with wson.",
   "main": "index.js",
   "scripts": {
