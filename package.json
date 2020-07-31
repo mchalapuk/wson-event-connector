@@ -30,13 +30,13 @@
   "devDependencies": {
     "coffee-script": "^1.11.1",
     "jsdom": "^16.3.0",
-    "mocha": "^8.0.1",
+    "mocha": "^8.1.0",
     "should": "^13.2.3",
     "underscore": "^1.10.2",
     "wson": "^2.0.0",
-    "wson-dom-connector": "^0.7.119"
+    "wson-dom-connector": "^0.7.120"
   },
   "dependencies": {
-    "offensive": "^2.6.23"
+    "offensive": "^2.6.24"
   }
 }
