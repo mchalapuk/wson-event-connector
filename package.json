@@ -33,8 +33,8 @@
     "mocha": "^8.1.1",
     "should": "^13.2.3",
     "underscore": "^1.10.2",
-    "wson": "^2.0.0",
-    "wson-dom-connector": "^0.7.124"
+    "wson": "^2.7.1",
+    "wson-dom-connector": "^0.7.125"
   },
   "dependencies": {
     "offensive": "^2.7.2"
